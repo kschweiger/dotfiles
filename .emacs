@@ -79,6 +79,7 @@
 (provide 'init-csv-mode)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-r") 'revert-buffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (require 'ibuf-ext)
 (add-to-list 'ibuffer-never-show-predicates "^\\*")
