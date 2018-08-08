@@ -60,7 +60,7 @@
     ("87d46d0ad89557c616d04bef34afd191234992c4eb955ff3c60c6aa3afc2e5cc" "2a998a3b66a0a6068bcb8b53cd3b519d230dd1527b07232e54c8b9d84061d48d" default)))
  '(package-selected-packages
    (quote
-    (base16-theme csv-mode ibuffer-vc highlight-indentation company-anaconda anaconda-mode markdown-mode company))))
+    (json-mode base16-theme csv-mode ibuffer-vc highlight-indentation company-anaconda anaconda-mode markdown-mode company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -83,19 +83,34 @@
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (require 'ibuf-ext)
 (add-to-list 'ibuffer-never-show-predicates "^\\*")
-;;(setq ibuffer-show-empty-filter-groups nil)
+(setq ibuffer-show-empty-filter-groups nil)
 (setq ibuffer-vc-skip-if-remote nil)
 (add-hook 'ibuffer-mode-hook
 	  '(lambda ()
 	     (ibuffer-auto-mode 1)
 	     ;;(ibuffer-vc-set-filter-groups-by-vc-root)
-	     ;;(ibuffer-switch-to-saved-filter-groups "default")
+	     (ibuffer-switch-to-saved-filter-groups "default")
 	   )
 	  )
-;(setq ibuffer-saved-filter-groups
-;      (quote (("default"
-;	       ("dired" (mode . dired-mode))
-;	       )
-;	      )
-;	     )
-;      )
+(setq ibuffer-saved-filter-groups
+          (quote (("default"
+		   ("python" (mode . python-mode))
+		   ("C++" (mode . c++-mode))	    
+		   ("Markdown" (mode . markdown-mode))
+		   ("shell" (name . "\\.sh$"))
+		   ("configs" ( or (name . "\\.conf$")
+				   (name . "\\.cfg$")))
+		   ("CSV" (mode . csv-mode))
+		   ("JSON" (name . "\\.json$"))
+		   ("dired" (mode . dired-mode))
+		   ))))
+;; nearly all of this is the default layout
+(setq ibuffer-formats 
+      '((mark modified read-only " "
+              (name 35 35 :left :elide) ; change: 30s were originally 18s
+              " "
+              (mode 16 16 :left :elide)
+              " " filename-and-process)
+        (mark " "
+              (name 16 -1)
+              " " filename)))
