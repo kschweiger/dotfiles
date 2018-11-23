@@ -1,9 +1,8 @@
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(setq package-list '(auto-complete base16-theme company-anaconda anaconda-mode company csv-mode highlight-indentation ibuffer-sidebar ibuffer-tramp ibuffer-vc markdown-mode))
+(setq package-list '(auto-complete base16-theme company-anaconda anaconda-mode company csv-mode highlight-indentation ibuffer-sidebar ibuffer-tramp ibuffer-vc markdown-mode, multiple-cursors))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
@@ -19,8 +18,8 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-(setq tramp-default-method "ssh")
-
+;;(setq tramp-default-method "ssh")
+;;(setq tramp-verbose 10)
 (show-paren-mode 1)
 
 (add-hook 'after-init-hook 'global-company-mode)
@@ -57,10 +56,10 @@
  '(custom-enabled-themes (quote (adwaita)))
  '(custom-safe-themes
    (quote
-    ("87d46d0ad89557c616d04bef34afd191234992c4eb955ff3c60c6aa3afc2e5cc" "2a998a3b66a0a6068bcb8b53cd3b519d230dd1527b07232e54c8b9d84061d48d" default)))
+    ("fede08d0f23fc0612a8354e0cf800c9ecae47ec8f32c5f29da841fe090dfc450" "fec45178b55ad0258c5f68f61c9c8fd1a47d73b08fb7a51c15558d42c376083d" "60e09d2e58343186a59d9ed52a9b13d822a174b33f20bdc1d4abb86e6b17f45b" "87d46d0ad89557c616d04bef34afd191234992c4eb955ff3c60c6aa3afc2e5cc" "2a998a3b66a0a6068bcb8b53cd3b519d230dd1527b07232e54c8b9d84061d48d" default)))
  '(package-selected-packages
    (quote
-    (json-mode base16-theme csv-mode ibuffer-vc highlight-indentation company-anaconda anaconda-mode markdown-mode company))))
+    (multiple-cursors yaml-mode json-mode base16-theme csv-mode ibuffer-vc highlight-indentation company-anaconda anaconda-mode markdown-mode company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -95,7 +94,8 @@
 (setq ibuffer-saved-filter-groups
           (quote (("default"
 		   ("python" (mode . python-mode))
-		   ("C++" (mode . c++-mode))	    
+		   ("C++" (mode . c++-mode))
+		   ("C" (mode . c-mode))	    
 		   ("Markdown" (mode . markdown-mode))
 		   ("shell" (name . "\\.sh$"))
 		   ("configs" ( or (name . "\\.conf$")
@@ -114,3 +114,10 @@
         (mark " "
               (name 16 -1)
               " " filename)))
+
+(require 'multiple-cursors)
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
