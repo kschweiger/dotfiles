@@ -2,7 +2,7 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(setq package-list '(auto-complete base16-theme company-anaconda anaconda-mode company csv-mode highlight-indentation ibuffer-sidebar ibuffer-tramp ibuffer-vc markdown-mode multiple-cursors))
+(setq package-list '(auto-complete base16-theme company-anaconda anaconda-mode company csv-mode highlight-indentation ibuffer-sidebar ibuffer-tramp ibuffer-vc markdown-mode multiple-cursors powerline))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
@@ -17,15 +17,19 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
-
+(require 'rx)
+(require 'tramp)
 ;;(setq tramp-default-method "ssh")
 ;;(setq tramp-verbose 10)
-(show-paren-mode 1)
 
+(show-paren-mode 1)
+(require 'powerline)
+(powerline-center-theme)
+(display-time-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 ;;(add-to-list 'company-backends 'company-jedi)
 (defun python-lisp-hook()
-  (anaconda-mode 1)
+  ;;(anaconda-mode 1)
   (highlight-indentation-mode 1))
 
 (add-hook 'python-mode-hook 'python-lisp-hook)
@@ -40,7 +44,7 @@
 (eval-after-load "company"
  '(add-to-list 'company-backends 'company-anaconda))
 
-
+(setq display-time-default-load-average nil)
 (setq ns-right-alternate-modifier nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -57,19 +61,25 @@
  '(custom-safe-themes
    (quote
     ("fede08d0f23fc0612a8354e0cf800c9ecae47ec8f32c5f29da841fe090dfc450" "fec45178b55ad0258c5f68f61c9c8fd1a47d73b08fb7a51c15558d42c376083d" "60e09d2e58343186a59d9ed52a9b13d822a174b33f20bdc1d4abb86e6b17f45b" "87d46d0ad89557c616d04bef34afd191234992c4eb955ff3c60c6aa3afc2e5cc" "2a998a3b66a0a6068bcb8b53cd3b519d230dd1527b07232e54c8b9d84061d48d" default)))
+ '(display-time-mode t)
  '(package-selected-packages
    (quote
-    ((\, multiple-cursors)
-     (\, multiple-cursors)
-     multiple-cursors yaml-mode json-mode base16-theme csv-mode ibuffer-vc highlight-indentation company-anaconda anaconda-mode markdown-mode company))))
+    (rainbow-delimiters company-irony company-irony-c-headers irony airline-themes
+			(\, multiple-cursors)
+			(\, multiple-cursors)
+			multiple-cursors yaml-mode json-mode base16-theme csv-mode ibuffer-vc highlight-indentation markdown-mode)))
+ '(split-height-threshold nil)
+ '(split-width-threshold nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#a6afb8")))))
+
 
 (load-theme 'base16-solarflare t)
+
 
 (delete-selection-mode 1)
 (setq csv-separators '(";" "\t"))
@@ -100,10 +110,13 @@
 		   ("C" (mode . c-mode))	    
 		   ("Markdown" (mode . markdown-mode))
 		   ("shell" (name . "\\.sh$"))
-		   ("configs" ( or (name . "\\.conf$")
-				   (name . "\\.cfg$")))
+		   ("configs" ( or (mode . conf-colon-mode)
+				   (mode . conf-space-mode)
+				   (mode . conf-unix-mode)))
 		   ("CSV" (mode . csv-mode))
 		   ("JSON" (name . "\\.json$"))
+		   ("Text" ( or (mode . text-mode)
+			    (name . "\\.log$")))
 		   ("dired" (mode . dired-mode))
 		   ))))
 ;; nearly all of this is the default layout
@@ -123,3 +136,12 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+(desktop-save-mode 1)
+;;(setq desktop-buffers-not-to-save "^$")
+(setq desktop-files-not-to-save  "^$")
+
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+(add-to-list 'tramp-remote-process-environment (format "PYENV_VERSION=%s" "3.6.7"))
+(add-to-list 'tramp-remote-process-environment (format "PYENV_ROOT=%s" "$HOME/.pyenv"))
+(setq company-global-modes '(not c++-mode c-mode))
