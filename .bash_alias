@@ -1,0 +1,16 @@
+#.bash_alias
+
+alias ls='ls --color=auto'
+alias ll='ls -l --color=auto --ignore=*~'
+alias ..='cd ..'
+alias root='root -l'
+alias doVOMS='voms-proxy-init -voms cms -valid 200:0'
+alias toCMSSW='cd $CMSSW_BASE/src'
+alias grep='grep --color=auto'
+alias gitdiff='git diff --color=auto'
+alias emacs='emacs -nw'
+alias sourceCRAB3='source /cvmfs/cms.cern.ch/crab3/crab.sh'
+alias lrt='ll -rt'
+alias whichCMSSW='echo $CMSSW_VERSION'
+alias myhtop='htop -u koschwei'
+alias la='ll -a'
