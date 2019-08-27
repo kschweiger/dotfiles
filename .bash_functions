@@ -56,7 +56,7 @@ checkWorkQuota() {
 tattach() {
     if [ $# == 0 ]; then
        echo "Pass session name"
-       exit 1
+       return 1
     fi
     tmux attach -t $1
 }
