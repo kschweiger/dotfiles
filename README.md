@@ -10,3 +10,14 @@ ln -s dotfiles/.bash_functions .bash_functions
 ln -s dotfiles/.emacs .emacs
 ln -s dotfiles/.tmux.conf .tmux.conf
 ```
+
+and add this to you `.bashrc`or `.bash_profile`:
+```bash
+if [ -f ~/.bash_functions ]; then
+    source ~/.bash_functions
+fi
+
+if [ -f ~/.bash_alias ]; then
+    source ~/.bash_alias
+fi
+```
