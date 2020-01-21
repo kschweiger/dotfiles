@@ -1,8 +1,5 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(setq package-list '(auto-complete base16-theme company-anaconda anaconda-mode company csv-mode highlight-indentation ibuffer-tramp ibuffer-vc markdown-mode multiple-cursors powerline pythonic))
+;; EMACS config by K. Schweiger
+(setq package-list '(auto-complete base16-theme company-anaconda anaconda-mode company csv-mode highlight-indentation ibuffer-tramp ibuffer-vc markdown-mode multiple-cursors powerline pythonic treemacs))
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -129,11 +126,11 @@ There are two things you can do about this warning:
 (load-theme 'base16-solarflare t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; CSV MODE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'csv-mode)
 (setq csv-separators '(";" "\t"))
 (setq csv-field-quotes '("\"" "'"))
 (setq csv-align-padding 2)
 (setq csv-header-lines 1)
-(require 'csv-mode)
 (provide 'init-csv-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; IBUFFER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -192,6 +189,7 @@ There are two things you can do about this warning:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TREEMNACS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'use-package)
+(require 'treemacs)
 (use-package treemacs
   :ensure t
   :defer t
@@ -217,7 +215,7 @@ There are two things you can do about this warning:
           treemacs-is-never-other-window         nil
           treemacs-max-git-entries               5000
           treemacs-missing-project-action        'ask
-          treemacs-no-png-images                 "";; changes
+          treemacs-no-png-images                 "";; changed
           treemacs-no-delete-other-windows       t
           treemacs-project-follow-cleanup        nil
           treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
@@ -227,7 +225,7 @@ There are two things you can do about this warning:
           treemacs-recenter-after-tag-follow     nil
           treemacs-recenter-after-project-jump   'always
           treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   "";; changes
+          treemacs-show-cursor                   "";; changed
           treemacs-show-hidden-files             t
           treemacs-silent-filewatch              nil
           treemacs-silent-refresh                nil
@@ -235,12 +233,9 @@ There are two things you can do about this warning:
           treemacs-space-between-root-nodes      t
           treemacs-tag-follow-cleanup            t
           treemacs-tag-follow-delay              1.5
-          treemacs-width                         35)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
+          treemacs-width                         35
+	  treemacs-default-visit-action          `treemacs-visit-node-in-most-recently-used-window ;; Change default RET behaviour for file opening
+	  )
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
@@ -258,10 +253,10 @@ There are two things you can do about this warning:
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
-;; (require 'treemacs)
 (with-eval-after-load 'treemacs
   (defun treemacs-ignore-example (filename absolute-path)
     (or (string-suffix-p "log"  absolute-path)
+	(string-suffix-p "pyc"  absolute-path)
         (string-suffix-p "pdf" absolute-path)))
 
   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-example))
