@@ -1,3 +1,4 @@
+#!/bin/bash
 #.bash_functions
 # T3PSI functions
 
@@ -46,11 +47,27 @@ copySE() {
     return 1
 }
 
+uploadSE() {
+     if [ $# != 2 ]; then
+	echo "Usage: uploadSE localfile path/to/pnfs/dest"
+	return 0
+     else
+	 LOCALFILE=$1
+	 DEST=$2
+     fi
+     
+     uberftp t3se01.psi.ch "put -r  ${LOCALFILE} ${DEST}"
+     return 1
+}
+
 
 checkWorkQuota() {
 	lynx  --dump --width=800 http://t3mon.psi.ch/PSIT3-custom/space.report  | egrep "NAME|$USER"
 }
 
+getKeysInFile() {
+  python -c "import ROOT; f = ROOT.TFile.Open('${1}'); keys = sorted([x.GetName() for x in f.GetListOfKeys()]); print '\n'.join(keys);"
+}
 
 # General functions
 tattach() {
