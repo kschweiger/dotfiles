@@ -56,6 +56,7 @@ uploadSE() {
 	 DEST=$2
      fi
      
+     echo uberftp t3se01.psi.ch "put -r  ${LOCALFILE} ${DEST}"
      uberftp t3se01.psi.ch "put -r  ${LOCALFILE} ${DEST}"
      return 1
 }
@@ -103,4 +104,21 @@ findDirecory() {
     else
 	echo "Please pass exactly one dir name"
     fi
+}
+
+untarAll() {
+    for file in ls -f *; do tar xvf $file; done
+}
+
+sshAgent() {
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+}
+
+sshClean() {
+   if [ $#  == 1 ];then
+	ssh -t $1 bash --noprofile
+   else
+	echo "Exactly one arg required"
+   fi
 }

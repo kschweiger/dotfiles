@@ -9,7 +9,10 @@ ln -s dotfiles/.bash_alias .bash_alias
 ln -s dotfiles/.bash_functions .bash_functions
 ln -s dotfiles/.emacs .emacs
 ln -s dotfiles/.tmux.conf .tmux.conf
+# mkdir bin #if not present
+ln -s dotfiles/bulkRename.py bin/bulkRename
 ```
+Also make sure that the `bin` directory is added to the `$PATH`.
 
 and add this to you `.bashrc`or `.bash_profile`:
 ```bash
