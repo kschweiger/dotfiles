@@ -6,9 +6,9 @@
 (setq tramp-default-method "plink")
 
 ;; TRAMP
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-(add-to-list 'tramp-remote-process-environment (format "PYENV_VERSION=%s" "3.7.11"))
-(add-to-list 'tramp-remote-process-environment (format "PYENV_ROOT=%s" "$HOME/.pyenv"))
+;;(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+;;(add-to-list 'tramp-remote-process-environment (format "PYENV_VERSION=%s" "3.7.11"))
+;;(add-to-list 'tramp-remote-process-environment (format "PYENV_ROOT=%s" "$HOME/.pyenv"))
 
 ;;(setq python-shell-interpreter "c:/Users/korbinian.schweiger/AppData/Local/Programs/Python/Python37/python.exe")
 
