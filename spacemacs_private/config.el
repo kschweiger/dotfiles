@@ -1,9 +1,9 @@
 (delete-selection-mode 1)
 
 ;; Windows stuff
-(setq w32-pass-rwindow-to-system nil)
-(setq w32-rwindow-modifier 'super)
-(setq tramp-default-method "plink")
+;;(setq w32-pass-rwindow-to-system nil)
+;;(setq w32-rwindow-modifier 'super)
+;;(setq tramp-default-method "plink")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; macOS Setting ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;(setq ns-right-alternate-modifier nil)
@@ -19,7 +19,7 @@
 ;;(setq python-shell-interpreter "c:/Users/korbinian.schweiger/AppData/Local/Programs/Python/Python37/python.exe")
 
 ;; Treemacs config
-(setq treemacs-python-executable "c:/Users/korbinian.schweiger/AppData/Local/Programs/Python/Python37/python.exe")
+;;(setq treemacs-python-executable "c:/Users/korbinian.schweiger/AppData/Local/Programs/Python/Python37/python.exe")
 (setq treemacs-no-png-images "")
 (setq treemacs-show-cursor "")
 

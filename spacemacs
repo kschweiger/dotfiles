@@ -62,7 +62,7 @@ This function should only modify configuration layer settings."
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
-     ;; version-control
+     version-control
      semantic
      (treemacs :variables
                treemacs-use-git-mode 'deferred)
