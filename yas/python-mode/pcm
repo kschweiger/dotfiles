@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Python main with custom function name
+# key: pcm
+# --
+def $1():$0
+    pass
+
+if __name__ == "__main__":
+   $1()
