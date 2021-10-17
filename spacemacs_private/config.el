@@ -1,15 +1,18 @@
 (delete-selection-mode 1)
 
-;; Windows stuff
-;;(setq w32-pass-rwindow-to-system nil)
-;;(setq w32-rwindow-modifier 'super)
-;;(setq tramp-default-method "plink")
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Windows Settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(if (eq system-type 'windows-nt)
+  (setq w32-pass-rwindow-to-system nil)
+  (setq w32-rwindow-modifier 'super)
+  (setq tramp-default-method "plink")
+)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; macOS Setting ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;(setq ns-right-alternate-modifier nil)
-;;(setq mac-right-option-modifier nil)
-;;Make option work as meta (as it would be on Linux)
-;;(setq mac-option-modifier 'meta)
+(if (eq system-type 'darwin) 
+  (setq ns-right-alternate-modifier nil)
+  (setq mac-right-option-modifier nil)
+  ;;Make option work as meta (as it would be on Linux)
+  (setq mac-option-modifier 'meta)
+)
 
 ;; TRAMP
 ;;(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
@@ -46,3 +49,6 @@
 ;;
 (setq spaceline-minor-modes-p nil)
 (setq spaceline-buffer-size-p nil)
+
+(setq lsp-pyright-venv-path (substitute-in-file-name "$HOME/.pyenv/versions"))
+(setq lsp-pyright-venv-directory (substitute-in-file-name "$HOME/.pyenv/versions"))
