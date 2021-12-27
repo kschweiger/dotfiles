@@ -1,6 +1,5 @@
 #+title: Personal Emacs Configuration
-#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
-
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * Basic Setup
 ** Basic Style
@@ -18,6 +17,7 @@
 #+end_src
 
 In some buffers (like treemacs or shell buffers) we want to disable the line numbers 
+
 
 #+begin_src emacs-lisp
   (dolist (mode '(org-mode-hook
@@ -43,8 +43,9 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
   (use-package paren
     :defer 1
     :config (show-paren-mode t))
-#+end_src
 
+  (setq vc-follow-symlinks t)
+#+end_src
 
 
 ** Tramp
@@ -431,18 +432,26 @@ Company-box is a company backend with icons
     :hook (company-mode . company-box-mode))
 #+end_src
 
-* Org
-** Basics
+* Markup
+** Org
+*** Basics
 #+begin_src emacs-lisp
   (defun efs/org-mode-setup ()
     (org-indent-mode)
     )
   (use-package org
+    :defer t
     :hook (org-mode . efs/org-mode-setup)
+    :general
+    (global-major-leader :keymaps 'org-mode-map
+      "I" '(:ignore t :which-key "Instert")
+      "It" '(org-insert-structure-template :which-key "Insert template")
+      "Il" '(org-insert-link :which-key "Insert Hyperlink")
+    )
     )
 #+end_src
 
-** Babel
+*** Babel
 #+begin_src emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -451,14 +460,14 @@ Company-box is a company backend with icons
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
 #+end_src
-  
-** Auto tangle
+
+*** Auto tangle
 
 #+begin_src emacs-lisp
   ;; Automatically tangle our Emacs.org config file when we save it
   (defun efs/org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
-                        (expand-file-name "~/.emacs.d/Emacs.org"))
+                        (expand-file-name "~/dotfiles/Emacs.org"))
       ;; Dynamic scoping to the rescue
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle))))
@@ -466,42 +475,59 @@ Company-box is a company backend with icons
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
 
-* Treemacs
+** Markdown
 
 #+begin_src emacs-lisp
-  (use-package treemacs 
+  (use-package markdown-mode
     :defer t
-    :commands (treemacs-select-window
-               treemacs-current-visibility)
-    :init
-    (progn
-      ;; copied from spacemacs
-      (defun sys/treemacs-project-toggle ()
-        "Toggle and add the current project to treemacs if not already added."
-        (interactive)
-        (if (eq (treemacs-current-visibility) 'visible)
-            (delete-window (treemacs-get-local-window))
-          (let ((path (projectile-ensure-project (projectile-project-root)))
-                (name (projectile-project-name)))
-            (unless (treemacs-current-workspace)
-              (treemacs--find-workspace))
-            (treemacs-do-add-project-to-workspace path name)
-            (treemacs-select-window)))))
-    (progn
-      (when (display-graphic-p)
-        (require 'all-the-icons)
-        (require 'treemacs-all-the-icons)
-        (treemacs-load-theme 'all-the-icons)))
-    (treemacs)
-    :config
-    (progn
-      (setq treemacs-default-visit-action 'treemacs-visit-node-in-most-recently-used-window)
-      (treemacs-follow-mode t))
     :general
-    (global-leader
-     "tt" '(treemacs :which-key "Open/Close sidebar")
-     "ta" '(treemacs-add-project-to-workspace :which-key "Add Project")
-     "tp" 'sys/treemacs-project-toggle))
+    (global-major-leader :keymaps 'markdown-mode-map
+    "i" '(:ignore t :wk "instert")
+    "il" '(markdown-instert-link :which-key "Insert link"))
+  )
+#+end_src
+
+* Tre
+emacs
+
+#+begin_src emacs-lisp
+    (use-package treemacs 
+      :defer t
+      :commands (treemacs-select-window
+                 treemacs-current-visibility)
+      :init
+      (progn
+        ;; copied from spacemacs
+        (defun sys/treemacs-project-toggle ()
+          "Toggle and add the current project to treemacs if not already added."
+          (interactive)
+          (if (eq (treemacs-current-visibility) 'visible)
+              (delete-window (treemacs-get-local-window))
+            (let ((path (projectile-ensure-project (projectile-project-root)))
+                  (name (projectile-project-name)))
+              (unless (treemacs-current-workspace)
+                (treemacs--find-workspace))
+              (treemacs-do-add-project-to-workspace path name)
+              (treemacs-select-window)))))
+      (progn
+        (when (display-graphic-p)
+          (require 'all-the-icons)
+          (require 'treemacs-all-the-icons)
+          (treemacs-load-theme 'all-the-icons)))
+      (treemacs)
+      :config
+      (progn
+        (setq treemacs-default-visit-action 'treemacs-visit-node-in-most-recently-used-window)
+        (treemacs-follow-mode t))
+      :general
+      (global-leader
+        "tt" '(treemacs :which-key "Open/Close sidebar")
+        "ta" '(treemacs-add-project-to-workspace :which-key "Add Project")
+        "tw" '(:ignore t :which-key "Workspaces")
+        "twc" '(treemacs-create-workspace :which-key "Create Workspace")
+        "twr" '(treemacs-remove-workspace :which-key "Remove Workspace")
+        "twn" '(treemacs-next-workspace :which-key "Next Workspace")
+        "tp" 'sys/treemacs-project-toggle))
 #+end_src
 
 * LSP
@@ -511,14 +537,18 @@ This is the general setup for lsp-mode:
   
 #+begin_src emacs-lisp
   (use-package lsp-mode
-    :init
+    ;;:init
     ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-    (setq lsp-keymap-prefix "M-m l")
+    ;;(setq lsp-keymap-prefix "M-m l")
     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
            (python-mode . lsp)
            ;; if you want which-key integration
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp
+    :general
+    (global-leader :keymaps '(python-mode-map csharp-mode-map)
+      "l" '(:keymap lsp-command-map :wk "lsp"))
+
     )
 
   ;; optionally
@@ -627,6 +657,8 @@ Add ident guids
 
 ** Git
 
+magit setup
+
 #+begin_src emacs-lisp
   (use-package magit
     :defer t
@@ -641,6 +673,8 @@ Add ident guids
     :config
     (transient-bind-q-to-quit))
 #+end_src
+
+Gitflow addition to magit
 
 #+begin_src emacs-lisp
   (use-package magit-gitflow
