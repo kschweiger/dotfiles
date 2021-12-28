@@ -47,7 +47,6 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
   (setq vc-follow-symlinks t)
 #+end_src
 
-
 ** Tramp
 
 #+begin_src emacs-lisp
@@ -137,6 +136,8 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
           "" '(:ignore t :which-key sys/major-mode-name)
           )
        (global-leader
+         "a"  '(org-todo-list :which-key "ToDo List"
+                              )
          "b" '(:ignore t :wk "buffers")
          "bb" 'ibuffer
          "bx" 'kill-current-buffer
@@ -163,6 +164,7 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
          "S" '(:ignore t :which-key "Spelling")
 
          "T" '(:ignore t :which-key "Themes")
+         "Tc" '(counsel-load-theme :which-key "Load Theme")
 
          "q" '(:ignore t :wk "quit")
        )
@@ -295,12 +297,15 @@ Run =M-x all-the-icons-install-fonts= on first setup
       "T3" '((lambda () (interactive)
                (load-theme 'doom-dracula t))
              :which-key "doom-dracula")
+      "T4" '((lambda () (interactive)
+               (load-theme 'doom-ayu-light t))
+             :which-key "doom-ayu-light")
       )
     )
   (use-package base16-theme
     :general
     (global-leader
-      "T4" '((lambda () (interactive)
+      "T5" '((lambda () (interactive)
                (load-theme 'base16-solarflare t))
              :which-key "solarflare")
       )
@@ -449,6 +454,18 @@ Company-box is a company backend with icons
       "Il" '(org-insert-link :which-key "Insert Hyperlink")
     )
     )
+
+(use-package org-bullets
+  :defer t
+  :init
+  (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode t))))
+#+end_src
+*** Agenda
+
+#+begin_src emacs-lisp
+(setq org-agenda-files
+      (directory-files-recursively (expand-file-name "~/Documents/Notizen") "^.*\..org")
+)
 #+end_src
 
 *** Babel
@@ -487,8 +504,7 @@ Company-box is a company backend with icons
   )
 #+end_src
 
-* Tre
-emacs
+* Treemacs
 
 #+begin_src emacs-lisp
     (use-package treemacs 
