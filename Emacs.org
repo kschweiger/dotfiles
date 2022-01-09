@@ -88,6 +88,9 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
 
   (defconst *sys/bsh-config-file* "~/.bashrc")
   (defconst *sys/zsh-config-file* "~/.zshrc")
+  (if (eq system-type 'darwin) 
+      (defconst *org/agenda-path* "~/Documents/Notizen")
+  )
 #+end_src
 
 ** packages
@@ -449,6 +452,7 @@ Company-box is a company backend with icons
     :hook (org-mode . efs/org-mode-setup)
     :general
     (global-major-leader :keymaps 'org-mode-map
+      "c" '(org-toggle-checkbox :which-key "Toggle checkbox")
       "I" '(:ignore t :which-key "Instert")
       "It" '(org-insert-structure-template :which-key "Insert template")
       "Il" '(org-insert-link :which-key "Insert Hyperlink")
@@ -464,7 +468,7 @@ Company-box is a company backend with icons
 
 #+begin_src emacs-lisp
 (setq org-agenda-files
-      (directory-files-recursively (expand-file-name "~/Documents/Notizen") "^.*\..org")
+      (directory-files-recursively (expand-file-name *org/agenda-path*) "^.*\..org")
 )
 #+end_src
 
