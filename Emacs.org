@@ -263,7 +263,8 @@ Use iBuffer instead of the regular buffer list for =C-x C-b=
 * Visuals
 ** Doom mod line
 
-Run =M-x all-the-icons-install-fonts= on first setup
+Run =M-x all-the-icons-install-fonts= on first setup. On Windows you, emacs ask for an install directory.
+After downloading go there and install all the ==.ttf== files (double click, press install).
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
