@@ -72,11 +72,9 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
 
   (defconst *sys/bsh-config-file* "~/.bashrc")
   (defconst *sys/zsh-config-file* "~/.zshrc")
+  (defconst *org/agenda-path* "~/org")
   (if (eq system-type 'darwin) 
       (defconst *org/agenda-path* "~/Documents/Notizen")
-  )
-  (if (eq system-type 'windows-nt) 
-      (defconst *org/agenda-path* "~/org")
   )
 #+end_src
 
