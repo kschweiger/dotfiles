@@ -1,0 +1,783 @@
+#+title: Personal Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
+
+* Basic Setup
+** Basic Style
+#+begin_src emacs-lisp
+  (scroll-bar-mode -1)        ; Disable visible scrollbar
+  (tool-bar-mode -1)          ; Disable the toolbar
+  (tooltip-mode -1)           ; Disable tooltips
+  (set-fringe-mode 10)        ; Give some breathing room
+
+  (menu-bar-mode -1)            ; Disable the menu bar
+
+  ;; Line and column numbers
+  (column-number-mode)
+  (global-display-line-numbers-mode t)
+#+end_src
+
+In some buffers (like treemacs or shell buffers) we want to disable the line numbers 
+
+
+#+begin_src emacs-lisp
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  shell-mode-hook
+                  treemacs-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0)))
+    )
+#+end_src
+
+** Basic behavior
+
+**Setting basic behavior of emcas**
+
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+
+  ;; always allow 'y' instead of 'yes'.
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (delete-selection-mode 1)
+
+  (use-package paren
+    :defer 1
+    :config (show-paren-mode t))
+
+  (setq vc-follow-symlinks t)
+#+end_src
+
+** Tramp
+
+#+begin_src emacs-lisp
+  (require 'tramp)
+  (setq tramp-default-method "ssh")
+  (if (eq system-type 'windows-nt)
+      (setq tramp-default-method "plink")
+    )
+#+end_src
+
+** Basic keys setup
+
+#+begin_src emacs-lisp
+  (defconst sys/leader-key "M-m"
+     "The default leader key.")
+
+  (defconst sys/major-leader-key "M-m m"
+     "The default major mode leader key.")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Windows Settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(if (eq system-type 'windows-nt)
+  (setq w32-pass-rwindow-to-system nil)
+  (setq w32-rwindow-modifier 'super)
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; macOS Setting ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(if (eq system-type 'darwin) 
+  (setq ns-right-alternate-modifier nil)
+  (setq mac-right-option-modifier nil)
+  ;;Make option work as meta (as it would be on Linux)
+  (setq mac-option-modifier 'meta)
+)
+#+end_src
+
+** Constants
+
+#+begin_src emacs-lisp
+  (defconst *sys/bsh-history-file* "~/.bash_history")
+  (defconst *sys/zsh-history-file* "~/.zsh_history")
+
+  (defconst *sys/bsh-config-file* "~/.bashrc")
+  (defconst *sys/zsh-config-file* "~/.zshrc")
+  (if (eq system-type 'darwin) 
+      (defconst *org/agenda-path* "~/Documents/Notizen")
+  )
+#+end_src
+
+** packages
+#+begin_src emacs-lisp
+    ;; Initialize package sources
+    (require 'package)
+
+    (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                             ("org" . "https://orgmode.org/elpa/")
+                             ("elpa" . "https://elpa.gnu.org/packages/")))
+
+    (package-initialize)
+    (unless package-archive-contents
+     (package-refresh-contents))
+
+    ;; Initialize use-package on non-Linux platforms
+    (unless (package-installed-p 'use-package)
+       (package-install 'use-package))
+
+    (require 'use-package)
+    (setq use-package-always-ensure t)
+
+    (use-package general
+      :ensure t
+      :config
+      (progn
+        (defun sys/major-mode-name (arg)
+          "Return major mode name"
+          (cons
+           (cadr (split-string (car arg) " "))
+           (replace-regexp-in-string
+            "-mode$"
+            ""
+            (symbol-name major-mode))))
+        (defun sys/eval-init ()
+          (interactive)
+          (load-file (expand-file-name "init.el" user-emacs-directory)))
+        (general-create-definer
+          global-leader
+          :keymaps 'override
+          :prefix sys/leader-key)
+
+       (general-create-definer
+          global-major-leader
+          :prefix sys/major-leader-key
+          "" '(:ignore t :which-key sys/major-mode-name)
+          )
+       (global-leader
+         "a"  '(org-todo-list :which-key "ToDo List"
+                              )
+         "b" '(:ignore t :wk "buffers")
+         "bb" 'ibuffer
+         "bx" 'kill-current-buffer
+         "bd" 'dired
+         "bD" 'dired-jump
+         "bm" '((lambda () (interactive) (switch-to-buffer "*Messages*"))
+                :which-key "messages-buffer")
+         "bs" '((lambda () (interactive) (switch-to-buffer "*scratch*"))
+                :which-key "scratch-buffer")
+
+         "f" '(:ignore t :wk "files")
+         ;; Reevaluate the init.el
+         "fR" '(sys/eval-init :which-key "Eval init.el")
+         ;;fR" '((lambda() load-file (expand-file-name "init.el" user-emacs-directory)) :which-key "Eval init.el") ;
+         ;; Quickly get the file relevant for the environemnt 
+         "fe" '(:ignore t :which-key "env")
+         "feb" '((lambda () (interactive) (find-file *sys/bsh-config-file*)) :which-key ".bashrc")
+         "fez" '((lambda () (interactive) (find-file *sys/zsh-config-file*)) :which-key ".zshrc")
+         "feo" '((lambda () (interactive) (find-file (expand-file-name "Emacs.org" user-emacs-directory))) :which-key "Emacs.org")
+         "fei" '((lambda () (interactive) (find-file (expand-file-name "init.el" user-emacs-directory))) :which-key "init.el")
+
+         "g" '(:ignore t :which-key "git")
+         "t" '(:ignore t :which-key "treemacs")
+         "S" '(:ignore t :which-key "Spelling")
+
+         "T" '(:ignore t :which-key "Themes")
+         "Tc" '(counsel-load-theme :which-key "Load Theme")
+
+         "q" '(:ignore t :wk "quit")
+       )
+      ))
+#+end_src
+
+** Shell setup
+
+The following is required so emacs uses the environment variables set in zshrc
+
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize)
+)
+#+end_src
+
+** Editing
+
+Multiple cursers is used to select and edit at multiple points in the visule part of the buffer
+
+#+begin_src emacs-lisp
+  (require 'multiple-cursors)
+
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+#+end_src
+
+Move text up and down. 
+
+#+begin_src emacs-lisp
+  (use-package move-text
+    :bind (
+           ("<M-up>" . move-text-up)
+           ("<M-down>" . move-text-down)
+           )
+    )
+#+end_src
+
+** iBuffer
+
+Use iBuffer instead of the regular buffer list for =C-x C-b=
+
+#+begin_src emacs-lisp
+
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (require 'ibuf-ext)
+  (setq ibuffer-show-empty-filter-groups nil)
+  (setq ibuffer-vc-skip-if-remote nil)
+  (add-hook 'ibuffer-mode-hook
+            '(lambda ()
+               (ibuffer-auto-mode 1)
+               ;;(ibuffer-vc-set-filter-groups-by-vc-root)
+               (ibuffer-switch-to-saved-filter-groups "default")
+             )
+            )
+  (setq ibuffer-saved-filter-groups
+            (quote (("default"
+                     ("org" (mode . org-mode)) 
+                     ("python" (mode . python-mode))
+                     ("C++" (mode . c++-mode))
+                     ("C" (mode . c-mode))	    
+                     ("Markdown" (mode . markdown-mode))
+                     ("shell" (name . "\\.sh$"))
+                     ("configs" ( or (mode . conf-colon-mode)
+                                     (mode . conf-space-mode)
+                                     (mode . conf-unix-mode)))
+                     ("CSV" (mode . csv-mode))
+                     ("JSON" (name . "\\.json$"))
+                     ("Text" ( or (mode . text-mode)
+                              (name . "\\.log$")))
+                     ("dired" (mode . dired-mode))
+                     ))))
+  ;; nearly all of this is the default layout
+  (setq ibuffer-formats 
+        '((mark modified read-only " "
+                (name 35 35 :left :elide) ; change: 30s were originally 18s
+                " "
+                (mode 16 16 :left :elide)
+                " " filename-and-process)
+          (mark " "
+                (name 16 -1)
+                " " filename)))
+
+  (add-to-list 'ibuffer-never-show-predicates "^\\*")
+#+end_src
+
+* Visuals
+** Doom mod line
+
+Run =M-x all-the-icons-install-fonts= on first setup
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :defer t
+    :config
+    (setq doom-modeline-icon (display-graphic-p)
+            doom-modeline-height 10
+            doom-modeline-buffer-file-name-style 'relative-to-project
+            doom-modeline-enable-word-count t
+            doom-modeline-continuous-word-count-modes '(markdown-mode org-mode)
+            doom-modeline-buffer-encoding nil)
+    :hook
+    (after-init . doom-modeline-mode)
+  )
+#+end_src
+
+** Themes
+
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :init (load-theme 'doom-dracula t)
+    :config
+    (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
+          doom-themes-enable-italic t ; if nil, italics is universally disabled
+          )
+    (doom-themes-org-config)
+    (doom-themes-treemacs-config)
+    :general
+    (global-leader 
+      "T1" '((lambda () (interactive)
+               (load-theme 'doom-one t))
+             :which-key "doom-one")
+      "T2" '((lambda () (interactive)
+               (load-theme 'doom-one-light t))
+             :which-key "doom-one-light")
+      "T3" '((lambda () (interactive)
+               (load-theme 'doom-dracula t))
+             :which-key "doom-dracula")
+      "T4" '((lambda () (interactive)
+               (load-theme 'doom-ayu-light t))
+             :which-key "doom-ayu-light")
+      )
+    )
+  (use-package base16-theme
+    :general
+    (global-leader
+      "T5" '((lambda () (interactive)
+               (load-theme 'base16-solarflare t))
+             :which-key "solarflare")
+      )
+    )
+#+end_src
+
+** Other stuff
+
+#+begin_src emacs-lisp
+(use-package solaire-mode
+  :defer t)
+#+end_src
+
+* General helpful stuff
+
+** which-key
+#+begin_src emacs-lisp
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config (setq which-key-idle-delay 0.3)
+  )
+#+end_src
+
+** restart-emcas
+
+#+begin_src emacs-lisp
+(use-package restart-emacs
+  :defer t
+  :general
+  (global-leader
+    "qq" '(save-buffers-kill-terminal :wk "quit Emacs")
+    "qR" '(restart-emacs :wk "restart Emacs"))
+    ;; "qr" '((restart-emacs (list "--resume-layouts")) :wk "restart Emacs (resume layouts)"))
+  )
+#+end_src
+
+* Ivy
+
+Setting up =Ivy= and =Counsel=. =Ivy-rich= add an extra column to the ivy buffer
+
+#+begin_src emacs-lisp
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ;;("TAB" . ivy-alt-done)	
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    (ivy-mode 1))
+
+  (use-package ivy-rich
+    :init
+    (ivy-rich-mode 1))
+
+
+  (use-package counsel
+    :bind (("C-M-j" . 'counsel-switch-buffer)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history)
+           )
+    :config
+    (counsel-mode 1))
+#+end_src
+
+* Company
+
+#+begin_src emacs-lisp
+ (use-package company
+   :hook ((prog-mode) . company-mode)
+   :diminish
+   :general
+   (general-def company-active-map
+     "C-k" 'company-select-previous
+     "C-j" 'company-select-next
+     "<tab>" 'company-complete-common-or-cycle
+     "S-<tab>" 'company-select-previous
+     ;;for x11 https://emacs.stackexchange.com/a/53469
+     "S-<iso-lefttab>" 'company-select-previous)
+   :config
+   (progn
+ 
+     (defun add-yasnippet-backend (backend)
+	"Add company-yasnippet backend to given company backend"
+	(if (and (listp backend) (member 'company-yasnippet backend))
+	    backend
+	  (append (if (consp backend) backend (list backend))
+		  '(:with company-yasnippet))))
+ 
+     ;; add yasnippet-backend to all company backends
+     (setq company-backends (mapcar #'add-yasnippet-backend company-backends))
+ 
+     (setq company-tooltip-align-annotations t
+	    company-idle-delay 0.1
+	    company-show- t
+	    company-dabbrev-ignore-case nil
+	    company-dabbrev-downcase nil
+	    company-minimum-prefix-length 2
+	    company-require-match nil)
+     )
+   )
+#+end_src
+
+Company-statistics is an extension to company which keeps track of completions to rank the displayed list
+
+#+begin_src emacs-lisp
+  (use-package company-statistics
+       :defer t
+       :init
+       (progn
+         (add-hook 'company-mode-hook 'company-statistics-mode)))
+#+end_src
+
+Company-box is a company backend with icons
+
+#+begin_src emacs-lisp
+  (use-package company-box
+    :if (display-graphic-p)
+    :after company
+    :hook (company-mode . company-box-mode))
+#+end_src
+
+* Markup
+** Org
+*** Basics
+#+begin_src emacs-lisp
+  (defun efs/org-mode-setup ()
+    (org-indent-mode)
+    )
+  (use-package org
+    :defer t
+    :hook (org-mode . efs/org-mode-setup)
+    :general
+    (global-major-leader :keymaps 'org-mode-map
+      "c" '(org-toggle-checkbox :which-key "Toggle checkbox")
+      "I" '(:ignore t :which-key "Instert")
+      "It" '(org-insert-structure-template :which-key "Insert template")
+      "Il" '(org-insert-link :which-key "Insert Hyperlink")
+    )
+    )
+
+(use-package org-bullets
+  :defer t
+  :init
+  (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode t))))
+#+end_src
+*** Agenda
+
+#+begin_src emacs-lisp
+(setq org-agenda-files
+      (directory-files-recursively (expand-file-name *org/agenda-path*) "^.*\..org")
+)
+#+end_src
+
+*** Babel
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+    '((emacs-lisp . t)
+      (python . t)))
+
+  (push '("conf-unix" . conf-unix) org-src-lang-modes)
+#+end_src
+
+*** Auto tangle
+
+#+begin_src emacs-lisp
+  ;; Automatically tangle our Emacs.org config file when we save it
+  (defun efs/org-babel-tangle-config ()
+    (when (string-equal (buffer-file-name)
+                        (expand-file-name "~/dotfiles/Emacs.org"))
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
+
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+#+end_src
+
+** Markdown
+
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :defer t
+    :general
+    (global-major-leader :keymaps 'markdown-mode-map
+    "i" '(:ignore t :wk "instert")
+    "il" '(markdown-instert-link :which-key "Insert link"))
+  )
+#+end_src
+
+* Treemacs
+
+#+begin_src emacs-lisp
+    (use-package treemacs 
+      :defer t
+      :commands (treemacs-select-window
+                 treemacs-current-visibility)
+      :init
+      (progn
+        ;; copied from spacemacs
+        (defun sys/treemacs-project-toggle ()
+          "Toggle and add the current project to treemacs if not already added."
+          (interactive)
+          (if (eq (treemacs-current-visibility) 'visible)
+              (delete-window (treemacs-get-local-window))
+            (let ((path (projectile-ensure-project (projectile-project-root)))
+                  (name (projectile-project-name)))
+              (unless (treemacs-current-workspace)
+                (treemacs--find-workspace))
+              (treemacs-do-add-project-to-workspace path name)
+              (treemacs-select-window)))))
+      (progn
+        (when (display-graphic-p)
+          (require 'all-the-icons)
+          (require 'treemacs-all-the-icons)
+          (treemacs-load-theme 'all-the-icons)))
+      (treemacs)
+      :config
+      (progn
+        (setq treemacs-default-visit-action 'treemacs-visit-node-in-most-recently-used-window)
+        (treemacs-follow-mode t))
+      :general
+      (global-leader
+        "tt" '(treemacs :which-key "Open/Close sidebar")
+        "ta" '(treemacs-add-project-to-workspace :which-key "Add Project")
+        "tw" '(:ignore t :which-key "Workspaces")
+        "twc" '(treemacs-create-workspace :which-key "Create Workspace")
+        "twr" '(treemacs-remove-workspace :which-key "Remove Workspace")
+        "twn" '(treemacs-next-workspace :which-key "Next Workspace")
+        "tp" 'sys/treemacs-project-toggle))
+#+end_src
+
+* LSP
+** lsp-mode
+
+This is the general setup for lsp-mode:
+  
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    ;;:init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    ;;(setq lsp-keymap-prefix "M-m l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (python-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp
+    :general
+    (global-leader :keymaps '(python-mode-map csharp-mode-map)
+      "l" '(:keymap lsp-command-map :wk "lsp"))
+
+    )
+
+  ;; optionally
+  (use-package lsp-ui 
+    :commands lsp-ui-mode
+    :config 
+    (setq lsp-ui-doc-show-with-mouse nil
+          lsp-ui-doc-show-with-cursor 1 
+          )
+    )
+#+end_src
+
+** pyright
+
+Additional setup for pyright. 
+  
+#+begin_src emacs-lisp
+  (use-package lsp-pyright
+    :defer t
+    :init
+    ;; Set the path to your venvs. I am using pyenv
+    (setq lsp-pyright-venv-path (substitute-in-file-name "$HOME/.pyenv/versions"))
+    (setq lsp-pyright-venv-directory (substitute-in-file-name "$HOME/.pyenv/versions"))
+
+    ;;:hook (python-mode . sys/lsp-start-pyright)
+
+
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp)))  ; or lsp-deferred
+    )
+#+end_src
+
+* Spelling
+
+#+begin_src emacs-lisp
+  (use-package ispell
+    :init
+    (progn
+      ;; env variable is important for hunspell to find
+      ;; the dictionary
+      (setenv "DICTIONARY" "en_US")
+      ;; (add-to-list 'ispell-hunspell-dictionary-alist '("deutsch-hunspell"
+      ;;                                                    "[[:alpha:]]"
+      ;;                                                    "[^[:alpha:]]"
+      ;;                                                    "[']"
+      ;;                                                    t
+      ;;                                                    ("-d" "de_DE"); Dictionary file name
+      ;;                                                    nil
+      ;;                                                    iso-8859-1))
+
+      ;; (add-to-list 'ispell-hunspell-dictionary-alist '("english-hunspell"
+      ;;                                                    "[[:alpha:]]"
+      ;;                                                    "[^[:alpha:]]"
+      ;;                                                    "[']"
+      ;;                                                    t
+      ;;                                                    ("-d" "en_US")
+      ;;                                                    nil
+      ;;                                                    iso-8859-1))
+      (setq ispell-program-name (executable-find "hunspell")
+            )))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package flyspell
+    :after ispell
+    :hook ((prog-mode . flyspell-prog-mode)
+             (text-mode . flyspell-mode))
+    :config
+    (progn
+      ;; better performance, see https://www.emacswiki.org/emacs/FlySpell#h5o-3
+      (setq flyspell-issue-message-flag nil)))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package flyspell-correct
+    :defer t
+    :after flyspell
+    :general
+    (global-leader
+      "Sc" '(flyspell-correct-wrapper :which-key "check"))
+    )
+#+end_src
+
+* Programming
+** General
+
+#+begin_src emacs-lisp
+
+#+end_src
+
+Add ident guids
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+    :defer t
+    :hook (prog-mode . highlight-indent-guides-mode)
+    :if (display-graphic-p)
+    :diminish
+    :config
+    (setq highlight-indent-guides-method 'character)
+    (setq highlight-indent-guides-responsive 'top)
+    (setq highlight-indent-guides-delay 0)
+    (setq highlight-indent-guides-auto-character-face-perc 7)
+    )
+#+end_src
+
+** Git
+
+magit setup
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :defer t
+    :after (general)
+    :general
+    (global-leader
+      ;;"g" '(:ignore t :which-key "magit")
+      "gb"  'magit-blame
+      "gi"  'magit-init
+      "gs"  'magit-status
+      )
+    :config
+    (transient-bind-q-to-quit))
+#+end_src
+
+Gitflow addition to magit
+
+#+begin_src emacs-lisp
+  (use-package magit-gitflow
+    :defer t
+    :init (setq magit-gitflow-popup-key "%")
+    ;; TODO add % key to magit-dispatch-popup
+    ;; https://magit.vc/manual/magit-popup.html#Customizing-Existing-Popups
+    ;; :config
+    ;; (progn
+    ;;   (magit-define-popup-action 'magit-dispatch-popup
+    ;;    "%" "Git Flow" 'magit-gitflow-popup t))
+    :hook (magit-mode . magit-gitflow-mode)
+    :general
+    (general-def magit-mode-map
+      "%" 'magit-gitflow-popup)
+    )
+#+end_src
+
+** Python
+
+#+begin_src emacs-lisp
+  (use-package python
+    :defer t
+    :config
+    (progn
+      (setq python-prettify-symbols-alist '(("in" . ?∈) ("lambda" . ?λ) ("not in" . ?∉))))
+    :hook ((python-mode . semantic-mode)
+           (python-mode . prettify-symbols-mode)
+           ;;(python-mode . (lambda ()
+           ;;     ;; disable project errors on modeline
+           ;;     (setq-local lsp-modeline-diagnostics-enable t
+           ;;     lsp-headerline-breadcrumb-enable t)))
+           )
+    :init
+    (progn
+      (setq semantic-default-submodes nil)
+      ))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package importmagic
+    :defer t
+    :init
+    (add-hook 'venv-postactivate-hook  #'importmagic-mode)
+    :general
+    (global-major-leader :keymaps 'python-mode-map
+      "i" '(:ignore t :wk "importmagic")
+      "ii" '(importmagic-fix-symbol-at-point :wk "fix import at point")
+      "ia" '(importmagic-fix-imports :wk "fix all imports")))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package pytest
+    :defer t
+    :commands (pytest-one ptytest-module pytest-all)
+    :config (add-to-list 'pytest-project-root-files "setup.cfg")
+    :general
+    (global-major-leader :keymaps 'python-mode-map
+      "t" '(:ignore t :which-key "testing")
+      "tt" 'pytest-one
+      "ta" 'pytest-all
+      "tb" 'pytest-module
+      )
+    )
+#+end_src
+
+Code formatting with black
+
+#+begin_src emacs-lisp
+  (use-package blacken :defer t :commands blacken-buffer
+    ;; only format buffer when in python-mode
+    :init (add-hook 'before-save-hook #'(lambda () (when (derived-mode-p 'python-mode)
+                                                     (blacken-buffer)
+                                                     )))
+    )
+#+end_src
+
+Sort imports
+
+#+begin_src emacs-lisp
+  (use-package py-isort
+    :commands py-isort-before-save
+    :init
+    ;;isort checks if in python-mode
+    (add-hook 'before-save-hook 'py-isort-before-save))
+#+end_src

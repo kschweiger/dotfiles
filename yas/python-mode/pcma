@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: Python custon main with Argparser
+# key: pcma
+# --
+def $1($2):
+    $0
+    pass
+
+if __name__ == "__main__":
+    import argparse
+
+    argumentparser = argparse.ArgumentParser(
+        description="Arguments passed to $1",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    argumentparser.add_argument(
+        "--$2",
+        action="store",
+        type=str,
+        help="Help arg 1",
+        required=True,
+    )
+    # argumentparser.add_argument(
+    #     "--flag",
+    #     action="store_true",
+    #     help="Flag arguments",
+    # )
+
+    args = argumentparser.parse_args()
+    
+    $1($2 = args.$2)

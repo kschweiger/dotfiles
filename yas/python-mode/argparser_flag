@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Python Argparser arguement definition
+# key: argparser_flag
+# --
+argumentparser.add_argument(
+     "--$1",
+     action="store_true",
+     help="$2",
+ )
