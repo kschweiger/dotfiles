@@ -29,23 +29,7 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
     )
 #+end_src
 
-** Basic behavior
 
-**Setting basic behavior of emcas**
-
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-
-  ;; always allow 'y' instead of 'yes'.
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  (delete-selection-mode 1)
-
-  (use-package paren
-    :defer 1
-    :config (show-paren-mode t))
-
-  (setq vc-follow-symlinks t)
-#+end_src
 
 ** Tramp
 
@@ -90,6 +74,9 @@ In some buffers (like treemacs or shell buffers) we want to disable the line num
   (defconst *sys/zsh-config-file* "~/.zshrc")
   (if (eq system-type 'darwin) 
       (defconst *org/agenda-path* "~/Documents/Notizen")
+  )
+  (if (eq system-type 'windows-nt) 
+      (defconst *org/agenda-path* "~/org")
   )
 #+end_src
 
@@ -184,6 +171,23 @@ The following is required so emacs uses the environment variables set in zshrc
   :config
   (exec-path-from-shell-initialize)
 )
+#+end_src
+** Basic behavior
+
+**Setting basic behavior of emcas**
+
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+
+  ;; always allow 'y' instead of 'yes'.
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (delete-selection-mode 1)
+
+  (use-package paren
+    :defer 1
+    :config (show-paren-mode t))
+
+  (setq vc-follow-symlinks t)
 #+end_src
 
 ** Editing
