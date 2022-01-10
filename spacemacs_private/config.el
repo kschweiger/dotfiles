@@ -33,10 +33,7 @@
 
 
 ;; ORG
-(setq org-agenda-files
-      (list "c:/Users/korbinian.schweiger/Documents/Notes/hgs.org"
-	          "c:/Users/korbinian.schweiger/Documents/Notes/outlier_modes.org")
-      )
+(setq org-agenda-files '("~/org"))
 
 ;; Perspectives
 ;;(add-hook 'kill-emacs-hook #'persp-state-save)
