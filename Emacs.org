@@ -791,3 +791,11 @@ Sort imports
     ;;isort checks if in python-mode
     (add-hook 'before-save-hook 'py-isort-before-save))
 #+end_src
+
+PYENV
+
+#+begin_src emacs-lisp
+
+(use-package pyenv-mode)
+
+#+end_src
