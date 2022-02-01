@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+# General functions
+tattach() {
+    if (( $# == 0 )) then
+       echo "Pass session name"
+       return 1;
+    fi
+    tmux attach -t $1
+}
+
+# Nuke current python env
+nuke_venv() {
+    echo "Nuking python env " $PYENV_VIRTUAL_ENV
+    pip freeze | grep -v "^-e"  |  grep -v "#" | xargs pip uninstall -y
+    echo "Editable projects need to be uninstalled by hand."
+    pip list
+}
