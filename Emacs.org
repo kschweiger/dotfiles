@@ -287,7 +287,7 @@ Switching themes can lead to weird renmants. Can by mitigated (to some extent) b
 
 #+begin_src emacs-lisp
 (defadvice load-theme (before theme-dont-propagate activate)
- (mapcar #'disable-theme custom-enabled-themes))
+ (mapc #'disable-theme custom-enabled-themes))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -730,7 +730,7 @@ Gitflow addition to magit
     :defer t
     :config
     (progn
-      (setq python-prettify-symbols-alist '(("in" . ?∈) ("lambda" . ?λ) ("not in" . ?∉))))
+      (setq python-prettify-symbols-alist '(("in" . ?∈) ("lambda" . ?λ) ("->" . ?→) (">=" . ?≥) ("<=" . ?≤) ("not in" . ?∉))))
     :hook ((python-mode . semantic-mode)
            (python-mode . prettify-symbols-mode)
            ;;(python-mode . (lambda ()
