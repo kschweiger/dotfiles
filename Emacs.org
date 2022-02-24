@@ -548,7 +548,9 @@ Company-box is a company backend with icons
       :config
       (progn
         (setq treemacs-default-visit-action 'treemacs-visit-node-in-most-recently-used-window)
-        (treemacs-follow-mode t))
+        (treemacs-follow-mode t)
+        (treemacs-filewatch-mode t)
+      )
       :general
       (global-leader
         "tt" '(treemacs :which-key "Open/Close sidebar")
@@ -721,6 +723,14 @@ Gitflow addition to magit
     (general-def magit-mode-map
       "%" 'magit-gitflow-popup)
     )
+#+end_src
+
+Use diff-hl-mode for VC added/removed/changed indicators next to the line numbers
+
+#+begin_src emacs-lisp
+(require 'diff-hl)
+(global-diff-hl-mode)
+(diff-hl-flydiff-mode)
 #+end_src
 
 ** Python
