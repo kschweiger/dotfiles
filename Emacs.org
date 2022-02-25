@@ -569,17 +569,18 @@ This is the general setup for lsp-mode:
   
 #+begin_src emacs-lisp
   (use-package lsp-mode
-    ;;:init
-    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-    ;;(setq lsp-keymap-prefix "M-m l")
     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
            (python-mode . lsp)
            ;; if you want which-key integration
-           (lsp-mode . lsp-enable-which-key-integration))
+           ;;(lsp-mode . lsp-enable-which-key-integration)
+           )
     :commands lsp
+    :config
+    (lsp-enable-which-key-integration t)
     :general
-    (global-leader :keymaps '(python-mode-map csharp-mode-map)
-      "l" '(:keymap lsp-command-map :wk "lsp"))
+    (global-leader :keymaps '(python-mode-map)
+      "l" '(:keymap lsp-command-map :wk "lsp")
+      )
 
     )
 
@@ -591,6 +592,55 @@ This is the general setup for lsp-mode:
           lsp-ui-doc-show-with-cursor 1 
           )
     )
+#+end_src
+
+*** lsp-treemacs
+
+lsp-treemacs adds tree views for things like symbols in a file, references of a symbol, or diagnostic messages (errors and warnings) that are found in your code.
+
+Try:
+- =lsp-treemacs-symbols= - Show a tree view of the symbols in the current file
+- =lsp-treemacs-references= - Show a tree view for the references of the symbol under the cursor
+- =lsp-treemacs-error-list= - Show a tree view for the diagnostic messages in the project
+
+#+begin_src emacs-lisp
+
+(use-package lsp-treemacs
+  :after lsp)
+
+#+end_src
+
+*** ivy-lsp
+
+Try:
+- =lsp-ivy-workspace-symbol= - Search for a symbol name in the current project workspace
+- =lsp-ivy-global-workspace-symbol= - Search for a symbol name in all active project workspaces
+
+#+begin_src emacs-lisp
+
+  (use-package lsp-ivy
+    :after lsp)
+
+#+end_src
+
+** Debugging
+
+#+begin_src emacs-lisp
+
+  (use-package dap-mode
+    ;; Uncomment the config below if you want all UI panes to be hidden by default!
+    :custom
+    (dap-auto-configure-features '(sessions locals controls tooltip))
+    :config
+    (require 'dap-python)
+    ;; (dap-ui-mode 1)
+
+    (general-define-key
+     :keymaps 'lsp-mode-map
+     :prefix lsp-keymap-prefix
+     "d" '(dap-hydra t :wk "debugger"))
+    )
+
 #+end_src
 
 ** pyright
@@ -743,10 +793,12 @@ Use diff-hl-mode for VC added/removed/changed indicators next to the line number
       (setq python-prettify-symbols-alist '(("in" . ?∈) ("lambda" . ?λ) ("->" . ?→) (">=" . ?≥) ("<=" . ?≤) ("not in" . ?∉))))
     :hook ((python-mode . semantic-mode)
            (python-mode . prettify-symbols-mode)
-           ;;(python-mode . (lambda ()
-           ;;     ;; disable project errors on modeline
-           ;;     (setq-local lsp-modeline-diagnostics-enable t
-           ;;     lsp-headerline-breadcrumb-enable t)))
+           (python-mode . pyenv-mode)
+           (python-mode . (lambda ()
+                ;; disable project errors on modeline
+                (setq-local lsp-modeline-diagnostics-enable nil
+                            lsp-headerline-breadcrumb-enable nil
+                            pyenv-mode-mode-line-format "")))
            )
     :init
     (progn
@@ -757,11 +809,10 @@ Use diff-hl-mode for VC added/removed/changed indicators next to the line number
 #+begin_src emacs-lisp
   (use-package importmagic
     :defer t
-    :init
-    (add-hook 'venv-postactivate-hook  #'importmagic-mode)
     :general
     (global-major-leader :keymaps 'python-mode-map
       "i" '(:ignore t :wk "importmagic")
+      "im" '(importmagic-mode :wk "Active mode")
       "ii" '(importmagic-fix-symbol-at-point :wk "fix import at point")
       "ia" '(importmagic-fix-imports :wk "fix all imports")))
 #+end_src
@@ -806,6 +857,9 @@ PYENV
 
 #+begin_src emacs-lisp
 
-(use-package pyenv-mode)
+  (use-package pyenv-mode
+    :config
+    (require 'pyenv-mode-auto)
+  )
 
 #+end_src
