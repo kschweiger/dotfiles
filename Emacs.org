@@ -1,6 +1,12 @@
 #+title: Personal Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
+* Requirements
+- Python
+  - pyenv
+  - isort, pytest, black, flake8 mypy in the venv
+  - pyright -> Install node, add the path and install pyright from there. The shell integration will figure it out
+
 * Basic Setup
 ** Basic Style
 #+begin_src emacs-lisp
@@ -186,6 +192,29 @@ The following is required so emacs uses the environment variables set in zshrc
     :config (show-paren-mode t))
 
   (setq vc-follow-symlinks t)
+
+  ;; Revert Dired and other buffers
+  (setq global-auto-revert-non-file-buffers t)
+
+  ;; Revert buffers when the underlying file has changed
+  (global-auto-revert-mode 1)
+
+#+end_src
+
+*** Minibuffer history
+
+#+begin_src emacs-lisp
+
+(use-package savehist
+  :config
+  (setq history-length 25)
+  (savehist-mode 1))
+
+  ;; Individual history elements can be configured separately
+  ;;(put 'minibuffer-history 'history-length 25)
+  ;;(put 'evil-ex-history 'history-length 50)
+  ;;(put 'kill-ring 'history-length 25))
+
 #+end_src
 
 ** Editing
@@ -667,31 +696,32 @@ Additional setup for pyright.
 * Spelling
 
 #+begin_src emacs-lisp
-  (use-package ispell
-    :init
-    (progn
-      ;; env variable is important for hunspell to find
-      ;; the dictionary
-      (setenv "DICTIONARY" "en_US")
-      ;; (add-to-list 'ispell-hunspell-dictionary-alist '("deutsch-hunspell"
-      ;;                                                    "[[:alpha:]]"
-      ;;                                                    "[^[:alpha:]]"
-      ;;                                                    "[']"
-      ;;                                                    t
-      ;;                                                    ("-d" "de_DE"); Dictionary file name
-      ;;                                                    nil
-      ;;                                                    iso-8859-1))
+  ;; (use-package ispell
+  ;;   :init
+  ;;   (progn
+  ;;     ;; env variable is important for hunspell to find
+  ;;     ;; the dictionary
+  ;;     (setenv "DICTIONARY" "en_US")
+  ;;     (add-to-list 'ispell-hunspell-dictionary-alist '("deutsch-hunspell"
+  ;;                                                        "[[:alpha:]]"
+  ;;                                                        "[^[:alpha:]]"
+  ;;                                                        "[']"
+  ;;                                                        t
+  ;;                                                        ("-d" "de_DE"); Dictionary file name
+  ;;                                                        nil
+  ;;                                                        iso-8859-1))
 
-      ;; (add-to-list 'ispell-hunspell-dictionary-alist '("english-hunspell"
-      ;;                                                    "[[:alpha:]]"
-      ;;                                                    "[^[:alpha:]]"
-      ;;                                                    "[']"
-      ;;                                                    t
-      ;;                                                    ("-d" "en_US")
-      ;;                                                    nil
-      ;;                                                    iso-8859-1))
-      (setq ispell-program-name (executable-find "hunspell")
-            )))
+  ;;     (add-to-list 'ispell-hunspell-dictionary-alist '("english-hunspell"
+  ;;                                                        "[[:alpha:]]"
+  ;;                                                        "[^[:alpha:]]"
+  ;;                                                        "[']"
+  ;;                                                        t
+  ;;                                                        ("-d" "en_US")
+  ;;                                                        nil
+  ;;                                                        iso-8859-1))
+  ;;     (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
+  ;;     (setq ispell-program-name (executable-find "hunspell")
+  ;;           )))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -790,7 +820,13 @@ Use diff-hl-mode for VC added/removed/changed indicators next to the line number
     :defer t
     :config
     (progn
-      (setq python-prettify-symbols-alist '(("in" . ?∈) ("lambda" . ?λ) ("->" . ?→) (">=" . ?≥) ("<=" . ?≤) ("not in" . ?∉))))
+      (setq python-prettify-symbols-alist '(("in" . ?∈) 
+                                            ("lambda" . ?λ) 
+                                            ("->" . ?→) 
+                                            (">=" . ?≥) 
+                                            ("<=" . ?≤) 
+                                            ("not in" . ?∉)))
+    )
     :hook ((python-mode . semantic-mode)
            (python-mode . prettify-symbols-mode)
            (python-mode . pyenv-mode)
@@ -803,7 +839,8 @@ Use diff-hl-mode for VC added/removed/changed indicators next to the line number
     :init
     (progn
       (setq semantic-default-submodes nil)
-      ))
+      )    
+)
 #+end_src
 
 #+begin_src emacs-lisp
