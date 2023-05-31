@@ -19,6 +19,23 @@
             ],
             "jinja": true,
             "justMyCode": false
+        },
+        {
+            "name": "Run Uvicorn",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "path.to:app",
+                "--host", 
+                "0.0.0.0", 
+                "--port", 
+                "1234", 
+                "--workers", 
+                "1",
+            ],
+            "jinja": true,
+            "justMyCode": false
         }
     ]
 }
