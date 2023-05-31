@@ -1,1 +1,2 @@
 unsetopt share_history
+setopt HIST_IGNORE_SPACE
