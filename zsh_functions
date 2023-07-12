@@ -16,3 +16,9 @@ nuke_venv() {
     echo "Editable projects need to be uninstalled by hand."
     pip list
 }
+
+start_agent() {
+   eval "$(ssh-agent -s)" 
+   ssh-add ~/.ssh/id_ed25519
+}
+
