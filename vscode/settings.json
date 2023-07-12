@@ -1,0 +1,55 @@
+{
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnType": true
+    },
+    "editor.smoothScrolling": true,
+    "editor.minimap.autohide": true,
+    "editor.minimap.enabled": false,
+    "workbench.colorTheme": "Monokai Pro (Filter Machine)",
+    "[html]": {
+        "editor.suggest.insertMode": "replace"
+    },
+    "autoDocstring.docstringFormat": "sphinx-notypes",
+    "files.associations": {
+        "*.html": "jinja-html"
+    },
+    "files.autoSave": "afterDelay",
+    "debug.allowBreakpointsEverywhere": true,
+    "jupyter.widgetScriptSources": [
+        "jsdelivr.com",
+        "unpkg.com"
+    ],
+    "explorer.confirmDragAndDrop": false,
+    "python.languageServer": "Pylance",
+    "python.analysis.autoImportCompletions": true,
+    "editor.semanticTokenColorCustomizations": {},
+    "todo-tree.general.tags": [
+        "TEMP",
+        "TODO",
+        "FIXME"
+    ],
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "icon": "check",
+            "background": "green",
+            "foreground": "white"
+        },
+        "FIXME": {
+            "background": "red",
+            "foreground": "white",
+            "iconColour": "red",
+            "gutterIcon": true
+        },
+        "TEMP": {
+            "icon": "clock",
+            "background": "blue",
+            "foreground": "white",
+        }
+    },
+    "python.formatting.provider": "black",
+    "python.analysis.indexing": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+}

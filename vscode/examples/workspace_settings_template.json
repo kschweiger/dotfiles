@@ -1,0 +1,15 @@
+{
+    "[python]": {
+        // "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true
+        }
+    },
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "ruff.args": [
+        "--config=pyproject.toml"
+    ]
+}
