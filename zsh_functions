@@ -23,6 +23,6 @@ start-agent() {
 }
 
 install-py-packages-editable() {
-   find . -type f -name "setup.py" -execdir pip install -e . --no-deps \;
+   find . -type f -name "setup.cfg" -execdir pip install -e . --no-deps \;
 }
 
