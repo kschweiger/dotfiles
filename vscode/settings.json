@@ -1,4 +1,5 @@
 {
+    "workbench.editor.revealIfOpen": true,
     "editor.formatOnSave": true,
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
@@ -28,28 +29,44 @@
     "todo-tree.general.tags": [
         "TEMP",
         "TODO",
-        "FIXME"
+        "FIXME",
+        "NOTE"
     ],
     "todo-tree.highlights.customHighlight": {
         "TODO": {
-            "icon": "check",
-            "background": "green",
-            "foreground": "white"
+            "icon": "checklist",
+            "background": "SeaGreen",
+            "foreground": "white",
+            "gutterIcon": true,
+            "iconColour": "SeaGreen"
         },
         "FIXME": {
             "background": "red",
-            "foreground": "white",
             "iconColour": "red",
             "gutterIcon": true
         },
         "TEMP": {
             "icon": "clock",
-            "background": "blue",
+            "background": "DodgerBlue",
             "foreground": "white",
+            "gutterIcon": true,
+            "iconColour": "DodgerBlue"
+        },
+        "NOTE" : {
+            "icon": "light-bulb",
+            "background": "PeachPuff",
+            "foreground": "black",
+            "gutterIcon": true,
+            "iconColour": "PeachPuff"
         }
     },
     "python.formatting.provider": "black",
     "python.analysis.indexing": true,
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportGeneralTypeIssues": "information",
+        "reportOptionalMemberAccess": "information"
+    }
 }
