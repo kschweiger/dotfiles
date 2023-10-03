@@ -64,6 +64,9 @@
     "python.analysis.indexing": true,
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "jupyter.debugJustMyCode": false,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "explorer.confirmDelete": false,
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.diagnosticSeverityOverrides": {
         "reportGeneralTypeIssues": "information",
