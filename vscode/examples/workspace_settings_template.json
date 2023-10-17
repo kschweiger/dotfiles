@@ -1,24 +1,41 @@
 {
     "[python]":{
+        "editor.defaultFormatter": "ms-python.black-formatter",
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.wordBasedSuggestions": false,
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {"source.fixAll": true}, 
     },
-    "python.analysis.extraPaths": [
-        // Add editable packages in the current workspace this this list
-    ],
-    "ruff.args" : [
-        "--config=pyproject.toml",
-        "--ignore=I001"
-    ],
-    "ruff.organizeImports": true,
-    "ruff.logLevel" : "debug",
-    "python.formatting.provider": "black",
+    "python.formatting.provider": "none",
     "python.testing.pytestArgs": [
         ".", 
         "--continue-on-collection-errors"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "python.analysis.extraPaths": [
+        // Add editable packages in the current workspace this this list
+    ],
+    "ruff.lint.args" : [
+        "--config=pyproject.toml",
+        "--ignore=I001"
+    ],
+    "ruff.organizeImports": true,
+    "[toml]" : {
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+        "editor.formatOnSave": true,
+    },
+    "[yaml]" : {
+        //"editor.defaultFormatter": "",
+        "editor.formatOnSave": true,
+    },
+    "[json]" : {
+        //"editor.defaultFormatter": "",
+        "editor.formatOnSave": true,
+    },
+    "[html]" : {
+        //"editor.defaultFormatter": "",
+        "editor.formatOnSave": true,
+    }
+
 }
