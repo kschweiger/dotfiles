@@ -9,9 +9,6 @@
     "editor.minimap.autohide": true,
     "editor.minimap.enabled": false,
     "workbench.colorTheme": "Monokai Pro (Filter Machine)",
-    "[html]": {
-        "editor.suggest.insertMode": "replace"
-    },
     "autoDocstring.docstringFormat": "sphinx-notypes",
     "files.associations": {
         "*.html": "jinja-html"
@@ -71,5 +68,23 @@
     "python.analysis.diagnosticSeverityOverrides": {
         "reportGeneralTypeIssues": "information",
         "reportOptionalMemberAccess": "information"
+    },
+    "[toml]" : {
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+        "editor.formatOnSave": true
+    },
+    "[yaml]" : {
+        //"editor.defaultFormatter": "",
+        "editor.formatOnSave": true
+    },
+    "[json]" : {
+        //"editor.defaultFormatter": "",
+        "editor.formatOnSave": true
+    },
+    "[html]" : {
+        //"editor.defaultFormatter": "",
+        "editor.suggest.insertMode": "replace",
+        "editor.formatOnSave": false
     }
+
 }
