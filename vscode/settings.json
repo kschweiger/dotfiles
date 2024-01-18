@@ -27,7 +27,8 @@
         "TEMP",
         "TODO",
         "FIXME",
-        "NOTE"
+        "NOTE",
+        "DONOTCOMMIT"
     ],
     "todo-tree.highlights.customHighlight": {
         "TODO": {
@@ -55,6 +56,13 @@
             "foreground": "black",
             "gutterIcon": true,
             "iconColour": "PeachPuff"
+        },
+        "DONOTCOMMIT" : {
+            "icon": "alert-fill",
+            "background": "Crimson",
+            "foreground": "white",
+            "gutterIcon": true,
+            "iconColour": "Crimson"
         }
     },
     "python.formatting.provider": "black",
