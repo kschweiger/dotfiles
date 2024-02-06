@@ -4,23 +4,17 @@ This is a place to save (and possibly share) my configuration files for various 
 Feel free to copy/share whatevery you like!
 
 After cloning:
-```bash
-ln -s dotfiles/.bash_alias .bash_alias
-ln -s dotfiles/.bash_functions .bash_functions
-ln -s dotfiles/.emacs .emacs
+```shell 
+ln -s dotfiles/zsh/zsh_settings .zsh_settings
+ln -s dotfiles/zsh/zsh_functions .zsh_functions
+ln -s dotfiles/zsh/zsh_aliases .zsh_aliases
+
 ln -s dotfiles/.tmux.conf .tmux.conf
-# mkdir bin #if not present
-ln -s dotfiles/bulkRename.py bin/bulkRename
 ```
-Also make sure that the `bin` directory is added to the `$PATH`.
 
-and add this to you `.bashrc`or `.bash_profile`:
-```bash
-if [ -f ~/.bash_functions ]; then
-    source ~/.bash_functions
-fi
-
-if [ -f ~/.bash_alias ]; then
-    source ~/.bash_alias
-fi
+Don't forget to update the `.zshrc` accordingly with something like:
+```shell 
+source ~/.zsh_aliases
+source ~/.zsh_functions
+source ~/.zsh_settings
 ```
