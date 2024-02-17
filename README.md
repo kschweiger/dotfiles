@@ -18,3 +18,12 @@ source ~/.zsh_aliases
 source ~/.zsh_functions
 source ~/.zsh_settings
 ```
+
+
+
+## tmux
+
+### Prerequisites
+
+1. tmux is install 🙃
+2. Istall [TPM](https://github.com/tmux-plugins/tpm)
