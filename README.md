@@ -43,3 +43,26 @@ See [vs-code readme](vscode/README.md) for more details.
 
 - [pyenv](https://github.com/pyenv/pyenv) for python version management
 - [bat](https://github.com/sharkdp/bat) to replace `cat` in the terminal
+
+# Notes
+
+## ssh
+
+Github provides a way to [use ssh over the https port](https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port) which can be used to interact with Github repos using usual ssh setups (ssh-keys, `git@github.com` remotes, ...). 
+
+For this you have to add the following to your ssh config:
+
+```
+Host github.com
+    Hostname ssh.github.com
+    Port 443
+    User git    
+```
+
+This can be tested with `ssh -T -p 443 git@ssh.github.com`. If you are behind a proxy, add
+
+```
+    ProxyCommand nc -X connect -x PROXYHOST:PROXYPORT %h %p
+```
+
+to the host. `nc` also support authentification if necessary.
