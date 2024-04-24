@@ -1,0 +1,51 @@
+{
+	"Default script": {
+		"prefix": "py-main",
+		"body": [
+			"def main() -> None:",
+			"\t${1:pass}",
+			"",
+			"if __name__ == '__main__':",
+			"\tmain()"
+		],
+		"description": "Create Python main function",
+		"isFileTemplate": true
+	},
+	"ClickCliTool" : {
+		"prefix" : "click",
+		"body" : [
+			"from typing import Literal",
+			"import click",
+			"",
+			"",
+			"@click.command()",
+			"@click.argument('arg1')",
+			"@click.option(",
+			"\t'--opt',",
+			"\thelp='Some help test',",
+			"\tdefault='Some default',",
+			"\trequired=False,",
+			"\tshow_default=True,",
+			")",
+			"@click.option('--path-opt', type=click.Path(exists=True))",
+			"@click.option(",
+			"\t'--choice-opt',",
+			"\trequired=True,",
+			"\ttype=click.Choice(['a', 'b'], case_sensitive=False),",
+			")",
+			"def main(",
+			"\targ1: str,",
+			"\topt: str,",
+			"\tpath_opt: str,",
+			"\tchoice_opt: Literal['a', 'b'],",
+			") -> None:",
+			"\tpass",
+			"",
+			"",
+			"if __name__ == '__main__':",
+			"\tmain()"
+		],
+		"description": "Create base click file",
+		"isFileTemplate": true
+	}
+}
