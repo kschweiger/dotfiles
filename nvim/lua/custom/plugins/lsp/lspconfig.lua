@@ -57,6 +57,12 @@ return {
 
       opts.desc = "Restart LSP"
       keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+      if client.name == 'ruff_lsp' then
+        -- Disable hover in favor of Pyright
+        client.server_capabilities.hoverProvider = false
+      end
+
     end
 
     -- used to enable autocompletion (assign to every lsp server config)
@@ -86,6 +92,7 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = {
+        disableOrganizeImports = false,
         python = {
             analysis = {
               autoSearchPaths = true,
@@ -99,6 +106,10 @@ return {
     lspconfig["ruff_lsp"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
+      settings = {
+        -- Any extra CLI arguments for `ruff` go here.
+        args = {},
+      }
     })
 
     -- configure lua server (with special settings)
