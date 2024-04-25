@@ -6,7 +6,7 @@ return {
       -- name = "venv",
       -- auto_refresh = false
       pyenv_path = "~/.pyenv/versions/",
-      fd_binary_name = "fdfind"
+      fd_binary_name = "fd"
     },
     -- event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
     keys = {
