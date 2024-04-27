@@ -5,6 +5,7 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-tree/nvim-web-devicons",
+    -- Requires ripgrep to be install on the system
     "folke/todo-comments.nvim",
   },
   config = function()
