@@ -23,15 +23,22 @@ return {
 
         mason_lspconfig.setup({
             -- list of servers for mason to install
-            ensure_installed = {"html", "cssls", "lua_ls", "pyright", "ruff_lsp", "rust_analyzer"},
+            ensure_installed = {
+                "html", 
+                "cssls", 
+                "lua_ls", 
+                "pyright", 
+                "ruff_lsp", 
+                "rust_analyzer"
+            },
             -- auto-install configured servers (with lspconfig)
             automatic_installation = true -- not the same as ensure_installed
         })
 
         mason_tool_installer.setup({
-            ensure_installed = {"prettier", -- prettier formatter
+            ensure_installed = {
+            "prettier", -- prettier formatter
             "stylua", -- lua formatter
-            "ruff" -- python formatter
             }
         })
     end
