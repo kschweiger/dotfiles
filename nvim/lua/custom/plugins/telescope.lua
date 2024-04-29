@@ -7,6 +7,7 @@ return {
     "nvim-tree/nvim-web-devicons",
     -- Requires ripgrep to be install on the system
     "folke/todo-comments.nvim",
+    "folke/which-key.nvim" 
   },
   config = function()
     local telescope = require("telescope")
@@ -26,6 +27,8 @@ return {
     })
 
     telescope.load_extension("fzf")
+    local wk = require("which-key")
+    wk.register({f = {name = "Telescope"}}, { prefix = "<leader>" })
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
