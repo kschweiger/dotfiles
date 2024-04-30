@@ -130,16 +130,16 @@ return {
           settings = {
             -- Any extra CLI arguments for `ruff` go here.
             args = {
-                "--ignore=I001"
+              "--ignore=I001",
             },
           },
         })
       end,
       ["html"] = function()
-          lspconfig["html"].setup({
-              capabilities = capabilities,
-              filetypes = {"html", "htmldjango"},
-          })
+        lspconfig["html"].setup({
+          capabilities = capabilities,
+          filetypes = { "html", "htmldjango" },
+        })
       end,
       ["rust_analyzer"] = function()
         lspconfig["rust_analyzer"].setup({

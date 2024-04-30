@@ -48,10 +48,10 @@ return {
       git = {
         ignore = false,
       },
-    })  
+    })
 
     local wk = require("which-key")
-    wk.register({e = {name = "File explorer"}}, { prefix = "<leader>" })
+    wk.register({ e = { name = "File explorer" } }, { prefix = "<leader>" })
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
