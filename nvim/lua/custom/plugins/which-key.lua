@@ -5,9 +5,24 @@ return {
     vim.o.timeout = true
     vim.o.timeoutlen = 500
   end,
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  },
+  config = function()
+    local wk = require("which-key")
+    wk.register({
+      x = { name = "Trouble " },
+      d = { name = "Dap " },
+      v = { name = "Venv " },
+      t = { name = "Test 󰤑" },
+      f = { name = "Telescope " },
+      e = { name = "File explorer " },
+      m = { name = "Misc " },
+    }, { mode = "n", prefix = "<leader>" })
+
+    wk.setup({
+      icons = {
+        breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+        separator = "➜", -- symbol used between a key and it's label
+        group = "󰁛 ", -- symbol prepended to a group
+      },
+    })
+  end,
 }

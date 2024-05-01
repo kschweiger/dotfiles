@@ -1,11 +1,7 @@
 return {
   {
     "mfussenegger/nvim-dap",
-    dependencies = { "folke/which-key.nvim" },
     config = function()
-      local wk = require("which-key")
-      wk.register({ d = { name = "Dap" } }, { prefix = "<leader>" })
-
       vim.keymap.set("n", "<F10>", '<cmd>lua require"dap".step_over()<CR>', {
         desc = "Step over",
       })

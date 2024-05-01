@@ -1,6 +1,6 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  dependencies = { "nvim-tree/nvim-web-devicons", "folke/which-key.nvim" },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local nvimtree = require("nvim-tree")
 
@@ -49,9 +49,6 @@ return {
         ignore = false,
       },
     })
-
-    local wk = require("which-key")
-    wk.register({ e = { name = "File explorer" } }, { prefix = "<leader>" })
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
