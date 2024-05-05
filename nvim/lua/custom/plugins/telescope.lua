@@ -35,7 +35,6 @@ return {
     keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find string in buffers" })
     keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
     keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find string in buffer" })
-    --keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find string in buffer" })
     keymap.set("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Find string in buffer" })
     keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
   end,
