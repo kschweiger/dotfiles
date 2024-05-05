@@ -31,8 +31,8 @@ return {
       })
       -- Active vs-code like launch.json support
       -- https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt#L323
-      -- TODO: DO not look in the .vscode folder but a nvim specific folder
-      require("dap.ext.vscode").load_launchjs()
+      -- TODO: Do not look in the .vscode folder but a nvim specific folder
+      -- require("dap.ext.vscode").load_launchjs()
     end,
   },
   {

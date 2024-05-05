@@ -62,7 +62,7 @@ return {
         keymap.set("n", "<leader>vch", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
         opts.desc = "Signature Help"
-        keymap.set({"n", "v", "i"}, "<C-h>", vim.lsp.buf.signature_help, opts)
+        keymap.set({ "n", "v", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary

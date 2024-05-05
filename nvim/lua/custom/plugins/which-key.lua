@@ -8,6 +8,7 @@ return {
   config = function()
     local wk = require("which-key")
     wk.register({
+      b = { name = "Buffers" },
       x = { name = "Trouble " },
       d = { name = "Dap " },
       v = { name = "Venv " },
