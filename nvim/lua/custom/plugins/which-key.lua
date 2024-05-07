@@ -11,7 +11,7 @@ return {
       b = { name = "Buffers" },
       x = { name = "Trouble " },
       d = { name = "Dap " },
-      v = { name = "Venv " },
+      p = { name = "Python " },
       t = { name = "Test 󰤑" },
       f = { name = "Telescope " },
       e = { name = "File explorer " },
