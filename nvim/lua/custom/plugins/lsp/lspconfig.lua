@@ -147,20 +147,20 @@ return {
           filetypes = { "html", "htmldjango" },
         })
       end,
-      --["rust_analyzer"] = function()
-      --  lspconfig["rust_analyzer"].setup({
-      --   capabilities = capabilities,
-      --    filetypes = { "rust" },
-      --    root_dir = util.root_pattern("Cargo.toml"),
-      --    settings = {
-      --      ["rust_analyzer"] = {
-      --        cargo = {
-      --          allFeatures = true,
-      --        },
-      --      },
-      --    },
-      --  })
-      -- end,
+      ["rust_analyzer"] = function()
+        lspconfig["rust_analyzer"].setup({
+          capabilities = capabilities,
+          filetypes = { "rust" },
+          root_dir = util.root_pattern("Cargo.toml"),
+          settings = {
+            ["rust_analyzer"] = {
+              cargo = {
+                allFeatures = true,
+              },
+            },
+          },
+        })
+      end,
     })
   end,
 }

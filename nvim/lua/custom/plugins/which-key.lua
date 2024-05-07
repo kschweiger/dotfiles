@@ -9,10 +9,12 @@ return {
     local wk = require("which-key")
     wk.register({
       b = { name = "Buffers" },
+      t = { name = "Tabs" },
       x = { name = "Trouble " },
       d = { name = "Dap " },
       p = { name = "Python " },
-      t = { name = "Test 󰤑" },
+      v = { name = "Vim Actions" },
+      -- t = { name = "Test 󰤑" },
       f = { name = "Telescope " },
       e = { name = "File explorer " },
       m = { name = "Misc " },
