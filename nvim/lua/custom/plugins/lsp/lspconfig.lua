@@ -119,12 +119,21 @@ return {
         lspconfig["pyright"].setup({
           capabilities = capabilities,
           settings = {
-            disableOrganizeImports = false,
+            pyright = {
+              disableOrganizeImports = true,
+            },
             python = {
               analysis = {
                 autoSearchPaths = true,
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true,
+                typeCheckingMode = "basic",
+                diagnosticSeverityOverrides = {
+                  reportGeneralTypeIssues = "information",
+                  reportArgumentType = "information",
+                  reportOptionalMemberAccess = "information",
+                  reportRedeclaration = "information",
+                },
               },
             },
           },
@@ -136,6 +145,7 @@ return {
           settings = {
             -- Any extra CLI arguments for `ruff` go here.
             args = {
+              "--config=pyproject.toml",
               "--ignore=I001",
             },
           },
