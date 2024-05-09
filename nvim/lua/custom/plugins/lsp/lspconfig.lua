@@ -142,11 +142,12 @@ return {
       ["ruff_lsp"] = function()
         lspconfig["ruff_lsp"].setup({
           capabilities = capabilities,
-          settings = {
-            -- Any extra CLI arguments for `ruff` go here.
-            args = {
-              "--config=pyproject.toml",
-              "--ignore=I001",
+          init_options = {
+            settings = {
+              args = {
+                "--config=pyproject.toml",
+                "--ignore=I001,F841",
+              },
             },
           },
         })

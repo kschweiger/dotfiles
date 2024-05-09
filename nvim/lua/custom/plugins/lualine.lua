@@ -54,6 +54,7 @@ return {
       options = {
         theme = my_lualine_theme,
       },
+      extensions = { "nvim-tree" },
       sections = {
         lualine_x = {
           {
@@ -64,6 +65,19 @@ return {
           { "encoding" },
           { "fileformat" },
           { "filetype" },
+        },
+        lualine_z = {
+          { "location" },
+          {
+            function()
+              for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                if vim.api.nvim_buf_get_option(buf, "modified") then
+                  return "󰽄" -- any message or icon
+                end
+              end
+              return ""
+            end,
+          },
         },
       },
     })
