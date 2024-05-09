@@ -16,7 +16,13 @@ return {
       todo_comments.jump_prev()
     end, { desc = "Previous todo comment" })
 
-    todo_comments.setup()
+    todo_comments.setup({
+      keywords = {
+        TODO = { icon = "", color = "#3CB371" },
+        WARN = { color = "#FFD700" },
+        DONOTCOMMIT = { icon = "", color = "#DC143C" },
+        NOTE = { icon = "", color = "#FFDAB9" },
+      },
+    })
   end,
 }
-
