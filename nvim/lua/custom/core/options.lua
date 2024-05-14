@@ -43,3 +43,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     })
   end,
 }) -- highlight yanked text using the 'IncSearch' highlight group for 40ms
+
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldcolumn = "0"
+opt.foldtext = ""
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldnestmax = 4

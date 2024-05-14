@@ -22,6 +22,7 @@ return {
         WARN = { color = "#FFD700" },
         DONOTCOMMIT = { icon = "", color = "#DC143C" },
         NOTE = { icon = "", color = "#FFDAB9" },
+        HACK = { alt = { "TEMP" } },
       },
     })
   end,
