@@ -60,14 +60,19 @@ return {
         opts.desc = "Go to next diagnostic"
         keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-        opts.desc = "Show documentation for what is under cursor"
-        keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+        -- opts.desc = "Show documentation for what is under cursor"
+        -- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
         opts.desc = "Signature Help"
         keymap.set({ "n", "v", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+        opts.desc = "Hide inlays"
+        keymap.set("n", "<leader>ni", function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, opts) -- mapping to restart lsp if necessary
       end,
     })
 
