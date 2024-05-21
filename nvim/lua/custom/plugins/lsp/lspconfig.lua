@@ -135,6 +135,7 @@ return {
                 typeCheckingMode = "basic",
                 diagnosticSeverityOverrides = {
                   reportGeneralTypeIssues = "information",
+                  reportPossiblyUnboundVariable = "warning",
                   reportArgumentType = "information",
                   reportOptionalMemberAccess = "information",
                   reportRedeclaration = "information",

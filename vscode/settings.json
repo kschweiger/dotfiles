@@ -2,13 +2,13 @@
     "workbench.editor.revealIfOpen": true,
     "editor.formatOnSave": true,
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnType": true
     },
     "editor.smoothScrolling": true,
     "editor.minimap.autohide": true,
     "editor.minimap.enabled": false,
-    "workbench.colorTheme": "Monokai Pro (Filter Machine)",
+    "workbench.colorTheme": "Catppuccin Mocha",
     "autoDocstring.docstringFormat": "sphinx-notypes",
     "files.associations": {
         "*.html": "jinja-html"
@@ -50,14 +50,14 @@
             "gutterIcon": true,
             "iconColour": "DodgerBlue"
         },
-        "NOTE" : {
+        "NOTE": {
             "icon": "light-bulb",
             "background": "PeachPuff",
             "foreground": "black",
             "gutterIcon": true,
             "iconColour": "PeachPuff"
         },
-        "DONOTCOMMIT" : {
+        "DONOTCOMMIT": {
             "icon": "alert-fill",
             "background": "Crimson",
             "foreground": "white",
@@ -75,24 +75,85 @@
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.diagnosticSeverityOverrides": {
         "reportGeneralTypeIssues": "information",
-        "reportOptionalMemberAccess": "information"
+        "reportPossiblyUnboundVariable": "error",
+        "reportOptionalMemberAccess": "information",
+        "reportAttributeAccessIssue": "information",
+        "reportUnusedVariable": "none"
     },
-    "[toml]" : {
+    "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml",
         "editor.formatOnSave": true
     },
-    "[yaml]" : {
+    "[yaml]": {
         //"editor.defaultFormatter": "",
         "editor.formatOnSave": true
     },
-    "[json]" : {
+    "[json]": {
         //"editor.defaultFormatter": "",
         "editor.formatOnSave": true
     },
-    "[html]" : {
+    "[lua]": {
+        //"editor.defaultFormatter": "",
+        "editor.formatOnSave": false
+    },
+    "[html]": {
         //"editor.defaultFormatter": "",
         "editor.suggest.insertMode": "replace",
         "editor.formatOnSave": false
-    }
-
+    },
+    "python.analysis.packageIndexDepths": [
+        {
+            "name": "gpxpy",
+            "depth": 2,
+            "includeAllSymbols": true
+        },
+        {
+            "name": "sklearn",
+            "depth": 2
+        },
+        {
+            "name": "matplotlib",
+            "depth": 2
+        },
+        {
+            "name": "plotly",
+            "depth": 3,
+            "includeAllSymbols": true
+        },
+        {
+            "name": "scipy",
+            "depth": 2
+        },
+        {
+            "name": "django",
+            "depth": 2
+        },
+        {
+            "name": "flask",
+            "depth": 2
+        },
+        {
+            "name": "fastapi",
+            "depth": 2
+        },
+        {
+            "name": "sqlalchemy",
+            "depth": 3,
+            "includeAllSymbols": true
+        }
+    ],
+    "editor.mouseWheelZoom": true,
+    "workbench.iconTheme": "catppuccin-mocha",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.neovimInitVimPaths.linux": "~/dotfiles/vscode/init.vim",
+    "vscode-neovim.neovimInitVimPaths.darwin": "~/dotfiles/vscode/init.vim",
+    "vscode-neovim.logLevel": "info",
+    "vscode-neovim.neovimClean": true,
+    "git.autofetch": true,
+    "githubIssues.useBranchForIssues": "off",
+    "jupyter.askForKernelRestart": false,
+    "luahelper.format.break_after_table_lb": true,
+    "luahelper.format.chop_down_kv_table": false,
 }
