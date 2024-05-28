@@ -40,6 +40,7 @@ return {
       ensure_installed = {
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
+        "taplo",
       },
     })
   end,
