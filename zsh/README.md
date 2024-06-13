@@ -5,11 +5,11 @@ General setup uses [Oh-My-Zsh](https://ohmyz.sh/#install) with the [Powerlevel10
 ## Additional plugins
 
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
-
+- [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#installation--setup)
 
 ## Intended usage of files
 
-The files 
+The files
 
 ```bash
 zsh_aliases
@@ -18,3 +18,4 @@ zsh_settings
 ```
 
 are intended to be sources in the `.zshrc`.
+

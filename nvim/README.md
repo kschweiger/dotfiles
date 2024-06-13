@@ -7,6 +7,7 @@
 - [fd](https://github.com/sharkdp/fd) is required by the `venvselect` plugin
 - [node](https://nodejs.org/en) required for third party programs like
   - [pyright](https://microsoft.github.io/pyright/#/)
+- Link this folder to `$HOME/.config/`
 
 ## MacOS and iTerm2
 

@@ -1,0 +1,28 @@
+# Bootstrap Linux environment checklist
+
+- Clone this repo :wink:
+- Install zsh
+  - Install [ohmyzsh](https://ohmyz.sh/#install)
+    - [Powerlevel10k](https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#oh-my-zsh)
+    - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+    - [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#installation--setup)
+    - Set the plugin list for your system
+  - Link zsh dotfiles from this repo to `$HOME`
+  - Create `.zprofile` and extend `$PATH` by `$HOME/bin` and create `$HOME/.local/`
+- Intall tmux (try for >=3.2)
+  - Link tmux config from this repo to `$HOME`
+  - Install [TPM](https://github.com/tmux-plugins/tpm)
+  - Run tmux and run TPM install Leader + I
+- Install cli tools
+  - [bat](https://github.com/sharkdp/bat)
+  - [ripgrep](https://github.com/BurntSushi/ripgrep)
+  - [fd](https://github.com/sharkdp/fd)
+  - [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-git)
+  - [node](https://nodejs.org/en) (Link folder into `$HOM/.local/` as `node`)
+  - [nvim](https://github.com/neovim/neovim/releases) >= 0.10 (Link executable to `$HOME/bin/`)
+- Programming langs
+  - Install [pyenv](https://github.com/pyenv/pyenv?tab=readme-ov-file#automatic-installer)
+    - Add the recommended lines to the `.zprofile` and `.zshrc`
+    - Install [python build deps](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
+    - Install `pyright` using npm
+  - Install rust using [rustup](https://www.rust-lang.org/tools/install)
