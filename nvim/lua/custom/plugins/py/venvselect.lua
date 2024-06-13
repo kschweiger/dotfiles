@@ -2,18 +2,17 @@ return {
   "linux-cultist/venv-selector.nvim",
   dependencies = {
     "neovim/nvim-lspconfig",
-    "nvim-telescope/telescope.nvim",
-    "mfussenegger/nvim-dap-python",
+    "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap-python", --optional
+    { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
   },
-  opts = {
-    pyenv_path = "~/.pyenv/versions/",
-    fd_binary_name = "fd",
-  },
-  event = "VeryLazy",
+  lazy = false,
+  branch = "regexp", -- This is the regexp branch, use this for the new version
+  config = function()
+    require("venv-selector").setup()
+  end,
   keys = {
-    -- Keymap to open VenvSelector to pick a venv.
     { "<leader>ps", "<cmd>VenvSelect<cr>", desc = "Select venv" },
-    -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
     { "<leader>pc", "<cmd>VenvSelectCached<cr>", desc = "Selected cached venv" },
   },
 }
