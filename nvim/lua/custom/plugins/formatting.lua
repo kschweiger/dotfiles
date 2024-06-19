@@ -19,7 +19,6 @@ return {
         graphql = { "prettier" },
         liquid = { "prettier" },
         lua = { "stylua" },
-        python = { "ruff_fix", "ruff_format" },
       },
       format_on_save = {
         lsp_fallback = true,
@@ -37,4 +36,3 @@ return {
     end, { desc = "Format file or range (in visual mode)" })
   end,
 }
-

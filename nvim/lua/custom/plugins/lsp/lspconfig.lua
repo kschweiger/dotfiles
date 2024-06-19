@@ -122,6 +122,20 @@ return {
       end,
       ["pyright"] = function()
         lspconfig["pyright"].setup({
+          -- Redefine the list so pyrightconfig.json is first. Personal
+          -- workaround for multirepo projects, that all should use
+          -- the same pyright config located in a common root
+          -- Default: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/pyright.lua
+          root_dir = function(fname)
+            return util.root_pattern(unpack({
+              "pyrightconfig.json",
+              "pyproject.toml",
+              "setup.py",
+              "setup.cfg",
+              -- "requirements.txt",
+              -- "Pipfile",
+            }))(fname)
+          end,
           capabilities = capabilities,
           settings = {
             pyright = {
