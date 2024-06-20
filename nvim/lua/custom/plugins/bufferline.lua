@@ -1,7 +1,7 @@
 return {
   "akinsho/bufferline.nvim",
   -- TEMP: Current release does not run with neovim >= 0.10:w
-  branch = "main",
+  -- branch = "main",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = { -- required(bufferline).setup(opts)
     options = {
