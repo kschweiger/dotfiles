@@ -1,0 +1,16 @@
+import = [
+  "C:\\Users\\korbinian.schweiger\\AppData\\Roaming\\alacritty\\catppuccin-mocha.toml"
+]
+
+shell="C:\\Windows\\System32\\wsl.exe"
+[font]
+size=10
+[font.normal]
+family="MesloLGS Nerd Font Mono"
+
+[env]
+TERM = "xterm-256color"
+[keyboard]
+bindings = [
+{key = "Space", mods = "Control", chars = "\u0000"}
+]
