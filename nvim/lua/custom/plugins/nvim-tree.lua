@@ -8,17 +8,12 @@ return {
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
-    -- change color for arrows in tree to light blue
-    vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
-    vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
-
     -- configure nvim-tree
     nvimtree.setup({
       view = {
         width = 35,
-        relativenumber = true,
+        relativenumber = false,
       },
-      -- change folder arrow icons
       renderer = {
         indent_markers = {
           enable = true,
@@ -43,19 +38,24 @@ return {
         },
       },
       filters = {
-        custom = { ".DS_Store" },
+        git_ignored = true,
+        custom = { ".DS_Store", ".git" },
       },
       git = {
         ignore = false,
+      },
+      update_focused_file = {
+        enable = true,
       },
     })
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
-
-    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
+    local api = require("nvim-tree.api")
+    keymap.set("n", "<leader>ee", api.tree.toggle, { desc = "Toggle file explorer" }) -- toggle file explorer
     keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+    keymap.set("n", "<leader>ec", api.tree.collapse_all, { desc = "Collapse file explorer" }) -- collapse file explorer
+    keymap.set("n", "<leader>er", api.tree.reload, { desc = "Refresh file explorer" }) -- refresh file explorer
+    keymap.set("n", "<leader>eg", api.tree.toggle_gitignore_filter, { desc = "Toggle git ignored files and folders" })
   end,
 }
