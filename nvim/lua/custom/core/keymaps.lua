@@ -4,6 +4,9 @@ vim.g.mapleader = " "
 local keymap = vim.keymap -- for conciseness
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
+keymap.set("n", "<leader>o", "o<ESC>", { desc = "Insert line below and jump to nex line" })
+keymap.set("n", "<leader>O", "O<ESC>", { desc = "Insert line below" })
+
 -- Pane Navigation
 vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
 vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
