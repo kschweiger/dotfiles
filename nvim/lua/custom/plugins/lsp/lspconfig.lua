@@ -25,7 +25,7 @@ return {
         -- set keybinds
         opts.desc = "Show LSP references"
         --keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-        keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
         opts.desc = "Go to declaration"
         keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         opts.desc = "Show LSP definitions"
@@ -39,8 +39,8 @@ return {
         opts.desc = "See available code actions"
         keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, opts)
 
-        --opts.desc = "Completion"
-        --keymap.set("i", "<C-l>", vim.lsp.buf.completion, opts) -- see available code actions, in visual mode will apply to selection
+        -- opts.desc = "Completion"
+        -- keymap.set("i", "<C-l>", vim.lsp.buf.completion, opts) -- see available code actions, in visual mode will apply to selection
 
         opts.desc = "Smart rename"
         keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts) -- smart rename

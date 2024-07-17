@@ -13,6 +13,5 @@ return {
   end,
   keys = {
     { "<leader>ps", "<cmd>VenvSelect<cr>", desc = "Select venv" },
-    { "<leader>pc", "<cmd>VenvSelectCached<cr>", desc = "Selected cached venv" },
   },
 }
