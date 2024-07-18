@@ -7,18 +7,18 @@ return {
   end,
   config = function()
     local wk = require("which-key")
-    wk.register({
-      b = { name = "Buffers" },
-      t = { name = "Tabs" },
-      x = { name = "Trouble " },
-      d = { name = "Dap " },
-      p = { name = "Python " },
-      v = { name = "Vim Actions" },
-      -- t = { name = "Test 󰤑" },
-      f = { name = "Telescope " },
-      e = { name = "File explorer " },
-      m = { name = "Misc " },
-    }, { mode = "n", prefix = "<leader>" })
+
+    wk.add({
+      { "<leader>b", group = "Buffers" },
+      { "<leader>t", group = "Tabs" },
+      { "<leader>x", group = "Trouble " },
+      { "<leader>d", group = "Dap " },
+      { "<leader>p", group = "Python " },
+      { "<leader>v", group = "Vim Actions" },
+      { "<leader>f", group = "Telescope " },
+      { "<leader>e", group = "File explorer " },
+      { "<leader>m", group = "Misc " },
+    })
 
     wk.setup({
       icons = {

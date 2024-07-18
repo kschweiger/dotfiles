@@ -7,32 +7,31 @@ return {
         local gs = package.loaded.gitsigns
 
         local wk = require("which-key")
-        wk.register({
-          h = {
-            name = "git",
-            -- Actions
-            s = { gs.stage_hunk, "Stage Hunk" },
-            r = { gs.reset_hunk, "Reset Hunk" },
-            S = { gs.stage_buffer, "Stage Bugger" },
-            R = { gs.reset_buffer, "Reset Buffer" },
-            u = { gs.undo_stage_hunk, "Undo Stage Hunk" },
-            p = { gs.preview_hunk, "Preview Hunk" },
-            b = {
-              function()
-                gs.blame_line({ full = true })
-              end,
-              "Blame line",
-            },
-            B = { gs.toggle_current_line_blame, "Toggle line blame" },
-            d = { gs.diffthis, "Diff this" },
-            D = {
-              function()
-                gs.diffthis("~")
-              end,
-              "Diff this ~",
-            },
+        wk.add({
+          { "<leader>h", group = "git" },
+          { "<leader>hB", gs.toggle_current_line_blame, desc = "Toggle line blame" },
+          {
+            "<leader>hD",
+            function()
+              gs.diffthis("~")
+            end,
+            desc = "Diff this ~",
           },
-        }, { mode = "n", prefix = "<leader>" })
+          { "<leader>hR", gs.reset_buffer, desc = "Reset Buffer" },
+          { "<leader>hS", gs.stage_buffe, desc = "Stage Bugger" },
+          {
+            "<leader>hb",
+            function()
+              gs.blame_line({ full = true })
+            end,
+            desc = "Blame line",
+          },
+          { "<leader>hd", gs.diffthis, desc = "Diff this" },
+          { "<leader>hp", gs.preview_hunk, desc = "Preview Hunk" },
+          { "<leader>hr", gs.reset_hunk, desc = "Reset Hunk" },
+          { "<leader>hs", gs.stage_hunk, desc = "Stage Hunk" },
+          { "<leader>hu", gs.undo_stage_hunk, desc = "Undo Stage Hunk" },
+        })
 
         local function map(mode, l, r, desc)
           vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })

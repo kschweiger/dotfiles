@@ -29,6 +29,13 @@ return {
       vim.keymap.set("n", "<leader>du", '<cmd>lua require"dapui".toggle()<CR>', {
         desc = "Toggle UI",
       })
+
+      vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError" })
+      vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticSignWarn" })
+      vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticSignInfo" })
+      vim.fn.sign_define("DapStopped", { text = "→", texthl = "", linehl = "DiffText", numhl = "" })
+      vim.fn.sign_define("DapBreakpointRejected", { text = "R", texthl = "", linehl = "", numhl = "" })
+
       -- Active vs-code like launch.json support
       -- https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt#L323
       -- require("dap.ext.vscode").load_launchjs()

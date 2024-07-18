@@ -1,3 +1,4 @@
 return {
-  "nvim-lua/plenary.nvim", -- lua functions that many plugins use	
+  { "nvim-lua/plenary.nvim" },
+  { "echasnovski/mini.icons", version = false },
 }
