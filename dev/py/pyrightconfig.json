@@ -1,0 +1,15 @@
+{
+  // "venv": "name",
+  // "venvPath": "/home/kschweiger/.pyenv/versions",
+  "extraPaths": [
+    // "./editable_projects",
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "src/experimental",
+    "src/typestubs",
+    "*mlruns",
+    "**/outputs"
+  ]
+}

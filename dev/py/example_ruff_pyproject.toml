@@ -1,0 +1,31 @@
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "PD",
+    "PT",
+    "NPY",
+    "N",
+    "W",
+    "RET",
+    "ANN",
+    "RUF",
+    "SIM",
+    "PERF",
+]
+unfixable = ["F841", "RUF015"]
+ignore = [
+    "ANN002",
+    "ANN003",
+    "ANN101",
+    "RET502",
+    "RET505",
+    "RUF005",
+    "RUF009",
+    "E731",
+]
