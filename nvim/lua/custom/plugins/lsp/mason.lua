@@ -41,7 +41,7 @@ return {
           "cssls",
           "lua_ls",
           "pyright",
-          "ruff_lsp",
+          "ruff",
           "rust_analyzer",
           "tsserver",
           "bashls",

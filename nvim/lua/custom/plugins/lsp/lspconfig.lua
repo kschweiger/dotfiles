@@ -159,14 +159,15 @@ return {
           },
         })
       end,
-      ["ruff_lsp"] = function()
-        lspconfig["ruff_lsp"].setup({
+      ["ruff"] = function()
+        lspconfig["ruff"].setup({
           capabilities = capabilities,
           init_options = {
             settings = {
               args = {
                 "--config=pyproject.toml",
-                "--ignore=I001,F841",
+                -- Not clear in the doc but this does not overwrite the ignore in the config file
+                '--config=\'"lint.ignore"=["I001","F841"]\'',
               },
             },
           },
