@@ -27,6 +27,7 @@ return {
         "typescript",
         "yaml",
         "html",
+        "htmldjango",
         "css",
         "markdown",
         "markdown_inline",
