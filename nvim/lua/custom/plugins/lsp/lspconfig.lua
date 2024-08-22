@@ -37,22 +37,22 @@ return {
         keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
         opts.desc = "See available code actions"
-        keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, opts)
+        keymap.set({ "n", "v" }, "<leader>lca", vim.lsp.buf.code_action, opts)
 
         -- opts.desc = "Completion"
         -- keymap.set("i", "<C-l>", vim.lsp.buf.completion, opts) -- see available code actions, in visual mode will apply to selection
 
         opts.desc = "Smart rename"
-        keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts) -- smart rename
+        keymap.set("n", "<leader>lcr", vim.lsp.buf.rename, opts) -- smart rename
 
         -- opts.desc = "References"
         -- keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts) -- smart rename
 
         opts.desc = "Show buffer diagnostics"
-        keymap.set("n", "<leader>vdb", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+        keymap.set("n", "<leader>ldb", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
         opts.desc = "Show line diagnostics"
-        keymap.set("n", "<leader>vdl", vim.diagnostic.open_float, opts) -- show diagnostics for line
+        keymap.set("n", "<leader>ldl", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
         opts.desc = "Go to previous diagnostic"
         keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
@@ -67,10 +67,10 @@ return {
         keymap.set({ "n", "v", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
         opts.desc = "Restart LSP"
-        keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+        keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 
         opts.desc = "Hide inlays"
-        keymap.set("n", "<leader>ni", function()
+        keymap.set("n", "<leader>lhi", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, opts) -- mapping to restart lsp if necessary
       end,

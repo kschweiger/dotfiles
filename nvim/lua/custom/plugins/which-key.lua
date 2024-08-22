@@ -18,6 +18,10 @@ return {
       { "<leader>f", group = "Telescope " },
       { "<leader>e", group = "File explorer " },
       { "<leader>m", group = "Misc " },
+      { "<leader>l", group = "LSP" },
+      { "<leader>lc", group = "Code" },
+      { "<leader>ld", group = "Diagnostics" },
+      { "<leader>lh", group = "Hide" },
     })
 
     wk.setup({
