@@ -18,8 +18,21 @@ return {
     local select_opts = { behavior = cmp.SelectBehavior.Select }
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
-
+    require("luasnip.loaders.from_lua").load({ paths = "~/dotfiles/nvim/snippets" })
     cmp.setup({
+      matching = {
+        disallow_fuzzy_matching = true, -- default : false
+        disallow_fullfuzzy_matching = true, -- default : false
+        disallow_partial_fuzzy_matching = true, -- default : true
+        disallow_partial_matching = false, -- default : false
+        disallow_prefix_unmatching = true, -- default : false
+        disallow_symbol_nonprefix_matching = true, -- default : true
+      },
+      performance = {
+        debounce = 0,
+        throttle = 0,
+      },
+
       completion = {
         -- autocomplete = false,
         completeopt = "menu,menuone,noselect",
