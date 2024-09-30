@@ -21,7 +21,7 @@ return {
 
       mason_tool_installer.setup({
         ensure_installed = {
-          "prettier", -- prettier formatter
+          -- "prettier", -- prettier formatter
           "stylua", -- lua formatter
           "taplo",
         },
@@ -43,7 +43,6 @@ return {
           "pyright",
           "ruff",
           "rust_analyzer",
-          "tsserver",
           "bashls",
         },
         -- auto-install configured servers (with lspconfig)
