@@ -8,13 +8,28 @@ return {
     "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim", -- vs-code like pictograms
+    "zbirenbaum/copilot-cmp",
   },
   config = function()
     local cmp = require("cmp")
 
     local luasnip = require("luasnip")
 
-    local lspkind = require("lspkind")
+    local types = require("cmp.types")
+    local compare = require("cmp.config.compare")
+
+    ---@type table<integer, integer>
+    local modified_priority = {
+      [types.lsp.CompletionItemKind.Variable] = types.lsp.CompletionItemKind.Method,
+      [types.lsp.CompletionItemKind.Snippet] = 0, -- top
+      [types.lsp.CompletionItemKind.Keyword] = 0, -- top
+      [types.lsp.CompletionItemKind.Text] = 100, -- bottom
+    }
+    ---@param kind integer: kind of completion entry
+    local function modified_kind(kind)
+      return modified_priority[kind] or kind
+    end
+
     local select_opts = { behavior = cmp.SelectBehavior.Select }
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
@@ -92,11 +107,43 @@ return {
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
+        { name = "copilot", group_index = 2 },
         { name = "nvim_lsp" },
         { name = "luasnip" }, -- snippets
         { name = "buffer" }, -- text within current buffer
         { name = "path" }, -- file system paths
       }),
+      sorting = {
+        -- https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/compare.lua
+        comparators = {
+          compare.offset,
+          compare.exact,
+          function(entry1, entry2) -- sort by length ignoring "=~"
+            local len1 = string.len(string.gsub(entry1.completion_item.label, "[=~()_]", ""))
+            local len2 = string.len(string.gsub(entry2.completion_item.label, "[=~()_]", ""))
+            if len1 ~= len2 then
+              return len1 - len2 < 0
+            end
+          end,
+          compare.recently_used,
+          function(entry1, entry2) -- sort by compare kind (Variable, Function etc)
+            local kind1 = modified_kind(entry1:get_kind())
+            local kind2 = modified_kind(entry2:get_kind())
+            if kind1 ~= kind2 then
+              return kind1 - kind2 < 0
+            end
+          end,
+          function(entry1, entry2) -- score by lsp, if available
+            local t1 = entry1.completion_item.sortText
+            local t2 = entry2.completion_item.sortText
+            if t1 ~= nil and t2 ~= nil and t1 ~= t2 then
+              return t1 < t2
+            end
+          end,
+          compare.score,
+          compare.order,
+        },
+      },
       -- configure lspkind for vs-code like pictograms in completion menu
       formatting = {
         fields = { "menu", "abbr", "kind" },
@@ -106,6 +153,7 @@ return {
             luasnip = "⋗",
             buffer = "Ω",
             path = "🖫",
+            copilot = "",
           }
 
           item.menu = menu_icon[entry.source.name]
