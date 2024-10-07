@@ -14,7 +14,7 @@ return {
     local cmp = require("cmp")
 
     local luasnip = require("luasnip")
-
+    local lspkind = require("lspkind")
     local types = require("cmp.types")
     local compare = require("cmp.config.compare")
 
@@ -144,21 +144,10 @@ return {
           compare.order,
         },
       },
-      -- configure lspkind for vs-code like pictograms in completion menu
       formatting = {
-        fields = { "menu", "abbr", "kind" },
-        format = function(entry, item)
-          local menu_icon = {
-            nvim_lsp = "λ",
-            luasnip = "⋗",
-            buffer = "Ω",
-            path = "🖫",
-            copilot = "",
-          }
-
-          item.menu = menu_icon[entry.source.name]
-          return item
-        end,
+        format = lspkind.cmp_format({
+          symbol_map = { Copilot = "" },
+        }),
       },
     })
   end,
