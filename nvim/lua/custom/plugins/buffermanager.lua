@@ -1,5 +1,6 @@
 return {
-  "j-morano/buffer_manager.nvim",
+  -- "j-morano/buffer_manager.nvim",
+  "kschweiger/buffer_manager.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     local buffer_manager = require("buffer_manager")
@@ -7,6 +8,8 @@ return {
     buffer_manager.setup({
       short_file_names = true,
       short_term_names = true,
+      width = 80,
+      height = 20,
     })
     vim.keymap.set("n", "<leader>bl", function()
       ui.toggle_quick_menu()
