@@ -10,14 +10,15 @@ return {
     keys = function()
       local keys = {
         {
-          "<leader>h",
+          "<leader>a",
           function()
             require("harpoon"):list():add()
           end,
           desc = "Harpoon File",
         },
+        { "<leader>h", "", desc = "harpoon", mode = { "n", "v" } },
         {
-          "<leader>Hm",
+          "<leader>hm",
           function()
             local harpoon = require("harpoon")
             harpoon.ui:toggle_quick_menu(harpoon:list())
@@ -25,7 +26,7 @@ return {
           desc = "Harpoon Quick Menu",
         },
         {
-          "<leader>fd",
+          "<leader>hd",
           function()
             local harpoon = require("harpoon")
             harpoon:list():remove()
@@ -33,7 +34,7 @@ return {
           desc = "Remove harpooned file",
         },
         {
-          "<leader>Hc",
+          "<leader>hc",
           function()
             local harpoon = require("harpoon")
             harpoon:list():clear()
@@ -122,6 +123,86 @@ return {
 
       nls.register(type_ignore_python)
       opts.sources = {}
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    keys = {
+      {
+        "<leader>fE",
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
+        end,
+        desc = "Explorer NeoTree (Root Dir)",
+      },
+      {
+        "<leader>fe",
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+        end,
+        desc = "Explorer NeoTree (cwd)",
+      },
+      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (Root Dir)", remap = true },
+      { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (cwd)", remap = true },
+    },
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    keys = function()
+      return {
+        { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+
+        { "<leader>A", "", desc = "+ai", mode = { "n", "v" } },
+        {
+
+          "<leader>Aa",
+          function()
+            return require("CopilotChat").toggle()
+          end,
+
+          desc = "Toggle (CopilotChat)",
+          mode = { "n", "v" },
+        },
+        {
+          "<leader>Ax",
+          function()
+            return require("CopilotChat").reset()
+          end,
+          desc = "Clear (CopilotChat)",
+          mode = { "n", "v" },
+        },
+        {
+          "<leader>Aq",
+          function()
+            local input = vim.fn.input("Quick Chat: ")
+            if input ~= "" then
+              require("CopilotChat").ask(input)
+            end
+          end,
+
+          desc = "Quick Chat (CopilotChat)",
+          mode = { "n", "v" },
+        },
+        {
+
+          "<leader>Ad",
+          function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(actions.help_actions())
+          end,
+          desc = "CopilotChat - Help actions",
+        },
+        -- Show prompts actions with telescope
+        {
+          "<leader>Ap",
+          function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+          end,
+
+          desc = "CopilotChat - Prompt actions",
+        },
+      }
     end,
   },
 }
