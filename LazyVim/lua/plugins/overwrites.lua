@@ -205,4 +205,10 @@ return {
       }
     end,
   },
+  {
+    "zbirenbaum/copilot-cmp",
+    opts = {
+      debounce = 300,
+    },
+  },
 }
