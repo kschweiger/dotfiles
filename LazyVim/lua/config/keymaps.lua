@@ -3,6 +3,7 @@
 -- Add any additional keymaps here
 local wk = require("which-key")
 wk.add({
+  { "<leader>tc", group = "Coverage" },
   { "<leader>ut", group = "themes" },
   { "<leader>ut1", "<cmd>colorscheme catppuccin-latte<cr>", desc = "Latte" },
   { "<leader>ut2", "<cmd>colorscheme catppuccin-macchiato<cr>", desc = "Macchiato" },
