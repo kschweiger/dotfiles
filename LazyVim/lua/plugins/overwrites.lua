@@ -12,6 +12,12 @@ return {
     },
   },
   {
+    "hrsh7th/nvim-cmp",
+    opts = { experimental = {
+      ghost_text = false,
+    } },
+  },
+  {
     "ThePrimeagen/harpoon",
     keys = function()
       local keys = {
@@ -210,11 +216,5 @@ return {
         },
       }
     end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    opts = {
-      debounce = 300,
-    },
   },
 }
