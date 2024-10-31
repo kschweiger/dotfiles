@@ -7,6 +7,7 @@ wk.add({
   { "<leader>ut", group = "themes" },
   { "<leader>ut1", "<cmd>colorscheme catppuccin-latte<cr>", desc = "Latte" },
   { "<leader>ut2", "<cmd>colorscheme catppuccin-macchiato<cr>", desc = "Macchiato" },
+  { "<leader>ut3", "<cmd>colorscheme catppuccin-frappe<cr>", desc = "Frappe" },
   { "<leader>o", "o<ESC>", desc = "Insert line below" },
   { "<leader>O", "O<ESC>", desc = "Insert line above" },
 })
