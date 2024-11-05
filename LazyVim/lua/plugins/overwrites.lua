@@ -12,6 +12,12 @@ return {
     },
   },
   {
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      sections = { lualine_z = {} },
+    },
+  },
+  {
     "hrsh7th/nvim-cmp",
     opts = { experimental = {
       ghost_text = false,
