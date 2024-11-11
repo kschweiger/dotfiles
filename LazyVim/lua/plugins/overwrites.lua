@@ -9,6 +9,11 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
       enable_diagnostics = false,
+      default_component_configs = {
+        git_status = {
+          symbols = { unstaged = "󰄯", staged = "󰄯" },
+        },
+      },
     },
   },
   {
