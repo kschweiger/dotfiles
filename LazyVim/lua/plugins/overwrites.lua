@@ -22,12 +22,12 @@ return {
       sections = { lualine_z = {} },
     },
   },
-  {
-    "hrsh7th/nvim-cmp",
-    opts = { experimental = {
-      ghost_text = false,
-    } },
-  },
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   opts = { experimental = {
+  --     ghost_text = false,
+  --   } },
+  -- },
   {
     "ThePrimeagen/harpoon",
     keys = function()
@@ -105,6 +105,14 @@ return {
         DONOTCOMMIT = { icon = "", color = "#DC143C" },
         NOTE = { icon = "", color = "#FFDAB9" },
         HACK = { alt = { "TEMP" } },
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      diagnostics = {
+        virtual_text = false,
       },
     },
   },
