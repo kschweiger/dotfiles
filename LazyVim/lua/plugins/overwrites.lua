@@ -236,4 +236,6 @@ return {
       }
     end,
   },
+  -- TEMP: Currently disabled because telescope was remove or something
+  { "linux-cultist/venv-selector.nvim", enabled = true },
 }
