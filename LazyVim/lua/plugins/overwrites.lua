@@ -247,7 +247,18 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
+      keymap = {
+        preset = "enter",
+        ["<C-space>"] = { "select_and_accept" },
+        ["<Tab>"] = { "select_next", "fallback" },
+      },
       completion = {
+        list = {
+          selection = {
+            preselect = false,
+            auto_insert = true,
+          },
+        },
         trigger = {
           show_on_blocked_trigger_characters = function()
             if vim.api.nvim_get_mode().mode == "c" then
