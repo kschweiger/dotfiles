@@ -22,12 +22,6 @@ return {
       sections = { lualine_z = {} },
     },
   },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   opts = { experimental = {
-  --     ghost_text = false,
-  --   } },
-  -- },
   {
     "ThePrimeagen/harpoon",
     keys = function()
@@ -231,18 +225,32 @@ return {
           end,
           desc = "CopilotChat - Help actions",
         },
-        -- Show prompts actions with telescope
         {
           "<leader>Ap",
           function()
             local actions = require("CopilotChat.actions")
-            require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+            require("CopilotChat.integrations.snacks").pick(actions.prompt_actions())
           end,
-
-          desc = "CopilotChat - Prompt actions",
+          desc = "Prompt Actions (CopilotChat)",
+          mode = { "n", "v" },
         },
       }
     end,
+    opts = {
+      model = "o3-mini",
+      prompts = {
+        CommitEmoji = {
+          prompt = [[
+> #git:staged
+
+$gemini-2.0-flash-001 Write commit message for the change with commitizen convention.
+Make sure the title has maximum 50 characters and message is wrapped at 72 characters.
+Wrap the whole message in code block with language gitcommit.
+Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
+]],
+        },
+      },
+    },
   },
   {
     "saghen/blink.cmp",
