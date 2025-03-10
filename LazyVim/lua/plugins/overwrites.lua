@@ -279,15 +279,18 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
   },
   {
     "mistweaverco/kulala.nvim",
+    opts = {
+      default_env = "staging",
+    },
     keys = {
       {
         "<leader>Re",
         function()
           local environments = {
+            { name = "prod", display = "🚀 Production", level = "info" },
+            { name = "staging", display = "🚦 Staging", level = "info" },
             { name = "testing", display = "🧪 Testing", level = "info" },
             { name = "dev", display = "🛠️ Development", level = "info" },
-            { name = "staging", display = "🚦 Staging", level = "info" },
-            { name = "production", display = "🚀 Production", level = "info" },
           }
           vim.ui.select(environments, {
             prompt = "Select Environment",
