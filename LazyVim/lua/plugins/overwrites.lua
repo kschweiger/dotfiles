@@ -217,19 +217,9 @@ return {
           mode = { "n", "v" },
         },
         {
-
-          "<leader>Ad",
-          function()
-            local actions = require("CopilotChat.actions")
-            require("CopilotChat.integrations.telescope").pick(actions.help_actions())
-          end,
-          desc = "CopilotChat - Help actions",
-        },
-        {
           "<leader>Ap",
           function()
-            local actions = require("CopilotChat.actions")
-            require("CopilotChat.integrations.snacks").pick(actions.prompt_actions())
+            require("CopilotChat").select_prompt()
           end,
           desc = "Prompt Actions (CopilotChat)",
           mode = { "n", "v" },
@@ -287,6 +277,40 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
       },
     },
   },
+  {
+    "mistweaverco/kulala.nvim",
+    keys = {
+      {
+        "<leader>Re",
+        function()
+          local environments = {
+            { name = "testing", display = "🧪 Testing", level = "info" },
+            { name = "dev", display = "🛠️ Development", level = "info" },
+            { name = "staging", display = "🚦 Staging", level = "info" },
+            { name = "production", display = "🚀 Production", level = "info" },
+          }
+          vim.ui.select(environments, {
+            prompt = "Select Environment",
+            format_item = function(item)
+              return item.display
+            end,
+          }, function(selected)
+            if selected then
+              require("kulala").set_selected_env(selected.name)
+              vim.notify("Environment set to: " .. selected.name, selected.level, {
+                title = "Kulala Environment",
+                opts = function(notif)
+                  notif.icon = selected.display
+                end,
+              })
+            end
+          end)
+        end,
+        desc = "Select an environment",
+      },
+    },
+  },
+
   -- TEMP: Currently disabled because telescope was remove or something
   { "linux-cultist/venv-selector.nvim", enabled = true },
   { "nvim-telescope/telescope.nvim", enabled = true },
