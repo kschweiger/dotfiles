@@ -287,10 +287,10 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
         "<leader>Re",
         function()
           local environments = {
-            { name = "prod", display = "🚀 Production", level = "info" },
-            { name = "staging", display = "🚦 Staging", level = "info" },
-            { name = "testing", display = "🧪 Testing", level = "info" },
-            { name = "dev", display = "🛠️ Development", level = "info" },
+            { name = "prod", display = "󱓞 Production", level = "info" },
+            { name = "staging", display = "󰔫 Staging", level = "info" },
+            { name = "testing", display = "󰙨 Testing", level = "info" },
+            { name = "dev", display = " Development", level = "info" },
           }
           vim.ui.select(environments, {
             prompt = "Select Environment",
@@ -310,6 +310,7 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
           end)
         end,
         desc = "Select an environment",
+        ft = "http",
       },
     },
   },
