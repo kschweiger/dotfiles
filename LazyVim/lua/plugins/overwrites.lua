@@ -318,6 +318,4 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
   -- TEMP: Currently disabled because telescope was remove or something
   { "linux-cultist/venv-selector.nvim", enabled = true },
   { "nvim-telescope/telescope.nvim", enabled = true },
-
-  { "zbirenbaum/copilot.lua", commit = "25ab971cb0badf3185d29f68a360c37b48d4e783" },
 }
