@@ -6,17 +6,6 @@ return {
     },
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      enable_diagnostics = false,
-      default_component_configs = {
-        git_status = {
-          symbols = { unstaged = "󰄯", staged = "󰄯" },
-        },
-      },
-    },
-  },
-  {
     "nvim-lualine/lualine.nvim",
     opts = {
       sections = { lualine_z = {} },
@@ -158,27 +147,27 @@ return {
       opts.sources = {}
     end,
   },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    keys = {
-      {
-        "<leader>fE",
-        function()
-          require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
-        end,
-        desc = "Explorer NeoTree (Root Dir)",
-      },
-      {
-        "<leader>fe",
-        function()
-          require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
-        end,
-        desc = "Explorer NeoTree (cwd)",
-      },
-      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (Root Dir)", remap = true },
-      { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (cwd)", remap = true },
-    },
-  },
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   keys = {
+  --     {
+  --       "<leader>fE",
+  --       function()
+  --         require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
+  --       end,
+  --       desc = "Explorer NeoTree (Root Dir)",
+  --     },
+  --     {
+  --       "<leader>fe",
+  --       function()
+  --         require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+  --       end,
+  --       desc = "Explorer NeoTree (cwd)",
+  --     },
+  --     { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (Root Dir)", remap = true },
+  --     { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (cwd)", remap = true },
+  --   },
+  -- },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     keys = function()
@@ -315,6 +304,5 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
     },
   },
 
-  -- TEMP: Currently disabled because telescope was remove or something
   { "linux-cultist/venv-selector.nvim", enabled = true },
 }
