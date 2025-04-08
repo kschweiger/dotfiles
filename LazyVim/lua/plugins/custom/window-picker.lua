@@ -3,6 +3,32 @@ return {
     "s1n7ax/nvim-window-picker",
     name = "window-picker",
     event = "VeryLazy",
+    keys = {
+      {
+        "<leader>wp",
+        function()
+          local window_id = require("window-picker").pick_window({
+            filter_rules = {
+              bo = {
+                filetype = {
+                  "snacks_picker_input",
+                  "snacks_picker_list",
+                  "notify",
+                  "snacks_notif",
+                },
+                buftype = { "quickfix", "prompt", "notify", "float" },
+              },
+            },
+          })
+          if not window_id then
+            return
+          end
+
+          vim.api.nvim_set_current_win(window_id)
+        end,
+        desc = "Pick Window",
+      },
+    },
     opts = {
       hint = "floating-big-letter",
       show_prompt = false,
@@ -10,11 +36,10 @@ return {
         autoselect_one = true,
         include_current_win = false,
         include_unfocusable_windows = false,
-            -- stylua: ignore
-            bo = {
-              filetype = { "snacks_picker_input", "snacks_picker_list", "NvimTree", "neo-tree", "notify", "snacks_notif", },
-              buftype = { "terminal", "nofile", "quickfix", "help", "prompt", "notify", "float" },
-            },
+        bo = {
+          filetype = { "snacks_picker_input", "snacks_picker_list", "NvimTree", "neo-tree", "notify", "snacks_notif" },
+          buftype = { "terminal", "nofile", "quickfix", "help", "prompt", "notify", "float" },
+        },
       },
     },
   },
