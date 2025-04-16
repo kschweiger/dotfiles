@@ -6,11 +6,14 @@ return {
       "nvim-neotest/neotest-python",
     },
 
-    opts = { adapters = {
-      ["neotest-python"] = {
-        dap = { justMyCode = false },
+    opts = {
+      adapters = {
+        ["neotest-python"] = {
+          dap = { justMyCode = false },
+          pytest_discover_instances = true,
+        },
       },
-    } },
+    },
   },
   {
     "mfussenegger/nvim-dap-python",
