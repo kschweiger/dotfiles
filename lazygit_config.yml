@@ -1,3 +1,20 @@
 git:
   commit:
     autoWrapCommitMessage: false
+
+customCommands:
+  - key: 'E'
+    context: 'files'
+    prompts:
+      - type: 'menu'
+        title: 'Release commit keyword'
+        key: 'ReleaseKeyword'
+        options:
+          - name: 'Patch'
+            value: 'patch'
+          - name: 'Minor'
+            value: 'minor'
+          - name: 'Major'
+            value: 'major'
+    command: 'git commit --allow-empty -n -m "release({{.Form.ReleaseKeyword}})"'
+    description: 'Create an empty release commit with selected keyword'
