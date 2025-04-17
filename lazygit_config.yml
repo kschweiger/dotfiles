@@ -1,6 +1,7 @@
 git:
   commit:
     autoWrapCommitMessage: false
+  skipHookPrefix: ""
 
 customCommands:
   - key: 'E'
