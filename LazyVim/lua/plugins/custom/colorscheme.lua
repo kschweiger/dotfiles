@@ -19,4 +19,5 @@ return {
     },
   },
   { "savq/melange-nvim" },
+  { "bluz71/vim-moonfly-colors" },
 }
