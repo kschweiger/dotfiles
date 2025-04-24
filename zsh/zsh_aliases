@@ -8,6 +8,15 @@ alias lrt='ll -rt'
 alias myhtop='htop -u $USER'
 alias la='ll -a'
 alias pip-ed='pip install -e . --no-deps'
-alias cat='bat --paging=never'
-alias dfl='duf --only local'
+alias uv-ed='pip install -e . --no-deps'
 alias watch-gpu='watch -n 1 nvidia-smi'
+
+# Alias for optional tools
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat --paging=never'
+elif command -v batcat >/dev/null 2>&1; then
+  alias cat='batcat --paging=never'
+fi
+if command -v duf >/dev/null 2>&1; then
+  alias dfl='duf --only local'
+fi
