@@ -10,7 +10,6 @@ After cloning:
 ln -s dotfiles/zsh/zsh_settings .zsh_settings
 ln -s dotfiles/zsh/zsh_functions .zsh_functions
 ln -s dotfiles/zsh/zsh_aliases .zsh_aliases
-ln -s dotfiles/zsh/p10k.zsh .p10k.zsh
 
 ln -s dotfiles/tmux.conf .tmux.conf
 ```
@@ -42,10 +41,16 @@ See [vs-code readme](vscode/README.md) for more details.
 
 # Other tools
 
-## Essentials
+## Tooling
 
-- [pyenv](https://github.com/pyenv/pyenv) for python version management
+- [nvim](https://github.com/neovim/neovim/releases)
+- [lazygit](https://github.com/jesseduffield/lazygit)
 - [bat](https://github.com/sharkdp/bat) to replace `cat` in the terminal
+- [fzf](https://github.com/junegunn/fzf)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- Lang tooling
+  - [pyenv](https://github.com/pyenv/pyenv) for python version management
+  - [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script) Node version management
 
 # Notes
 

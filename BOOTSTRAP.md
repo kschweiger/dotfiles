@@ -9,7 +9,7 @@
     - Set the plugin list for your system
   - Link zsh dotfiles from this repo to `$HOME`
   - Create `.zprofile` and extend `$PATH` by `$HOME/bin` and create `$HOME/.local/`
-- Intall tmux (try for >=3.2)
+- Intall tmux
   - Link tmux config from this repo to `$HOME`
   - Install [TPM](https://github.com/tmux-plugins/tpm)
   - Run tmux and run TPM install Leader + I
@@ -18,11 +18,12 @@
   - [ripgrep](https://github.com/BurntSushi/ripgrep)
   - [fd](https://github.com/sharkdp/fd)
   - [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-git)
-  - [node](https://nodejs.org/en) (Link folder into `$HOM/.local/` as `node`)
-  - [nvim](https://github.com/neovim/neovim/releases) >= 0.10 (Link executable to `$HOME/bin/`)
+  - [lazygit](https://github.com/jesseduffield/lazygit)
+  - [nvim](https://github.com/neovim/neovim/releases) (Link executable to `$HOME/.local/bin/`)
 - Programming langs
   - Install [pyenv](https://github.com/pyenv/pyenv?tab=readme-ov-file#automatic-installer)
     - Add the recommended lines to the `.zprofile` and `.zshrc`
     - Install [python build deps](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
-    - Install `pyright` using npm
   - Install rust using [rustup](https://www.rust-lang.org/tools/install)
+  - Install [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script) Node version management
+    - Install latest LTS with `nvm install --lts`

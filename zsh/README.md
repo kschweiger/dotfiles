@@ -6,6 +6,7 @@ General setup uses [Oh-My-Zsh](https://ohmyz.sh/#install) with the [Powerlevel10
 
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#installation--setup)
+- [autoupdate](https://github.com/tamcore/autoupdate-oh-my-zsh-plugins)
 
 ## Intended usage of files
 
