@@ -9,6 +9,21 @@ tattach() {
     tmux attach -t $1
 }
 
+spin() {
+    # Check if tspin is available
+    if ! command -v tspin &> /dev/null; then
+        echo "Error: tspin command not found"
+        return 1
+    fi
+
+    if (( $# == 0 )) then
+       echo "At least one argument expected"
+       return 1;
+    fi
+
+    "$@" 2>&1 | tspin
+}
+
 # Nuke current python env
 nuke-venv() {
     echo "Nuking python env " $PYENV_VIRTUAL_ENV
