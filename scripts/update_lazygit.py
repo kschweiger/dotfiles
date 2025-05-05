@@ -10,37 +10,41 @@ from pathlib import Path
 def main():
     home = Path.home()
 
-    nvim_version = subprocess.check_output(["nvim", "--version"], text=True, cwd=home)
+    version = subprocess.check_output(["lazygit", "--version"], text=True, cwd=home)
 
-    version_match = re.search(r"NVIM (v[\d.]+)", nvim_version)
+    version_match = re.search(r"version=([^,]+)", version)
+
     if version_match:
         version = version_match.group(1)
-        print(f"Extracted Neovim version: {version}")
+        print(f"Extracted LazyGit version: {version}")
     else:
         print("Version could not be extracted")
         exit(1)
 
     res = urllib.request.urlopen(
-        "https://api.github.com/repos/neovim/neovim/releases/latest"
+        "https://api.github.com/repos/jesseduffield/lazygit/releases/latest"
     )
     data = json.loads(res.read().decode())
     latest_tag = data["tag_name"]
 
-    if latest_tag == version:
-        print("Neovim is up to date")
+    if latest_tag.replace("v", "") == version:
+        print("LazyGit is up to date")
         exit(0)
+    else:
+        print("Found new version: %s" % latest_tag)
 
     system = platform.system().lower()  # 'Linux', 'Windows', 'Darwin' (for macOS)
     machine = platform.machine().lower()  # 'x86_64', 'amd64', 'arm64', etc.
     print(f"System: {system}, Architecture: {machine}")
 
+    print(data["assets"])
     match system, machine:
         case "linux", "x86_64":
             _asset = [
                 a
                 for a in data["assets"]
-                if system in a["name"]
-                and machine in a["name"]
+                if system in a["name"].lower()
+                and machine in a["name"].lower()
                 and a["name"].endswith("tar.gz")
             ]
             assert len(_asset) == 1, f"Expected 1 asset, found {len(_asset)}"
@@ -64,7 +68,11 @@ def main():
 
     try:
         # Use tar command via subprocess to extract
-        subprocess.run(["tar", "-xzf", str(filename)], check=True, cwd=home)
+        subprocess.run(
+            ["tar", "-xzf", str(filename), "-C", f"{home}/.local/bin/"],
+            check=True,
+            cwd=home,
+        )
         print("Successfully extracted archive")
 
         # Optional: Remove the tar.gz file after extraction
