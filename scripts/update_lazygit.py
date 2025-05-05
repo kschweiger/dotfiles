@@ -37,7 +37,6 @@ def main():
     machine = platform.machine().lower()  # 'x86_64', 'amd64', 'arm64', etc.
     print(f"System: {system}, Architecture: {machine}")
 
-    print(data["assets"])
     match system, machine:
         case "linux", "x86_64":
             _asset = [
@@ -77,6 +76,8 @@ def main():
 
         # Optional: Remove the tar.gz file after extraction
         subprocess.run(["rm", str(filename)], check=True, cwd=home)
+        subprocess.run(["rm", f"{home}/.local/bin/LICENSE"], check=True, cwd=home)
+        subprocess.run(["rm", f"{home}/.local/bin/README.md"], check=True, cwd=home)
         print(f"Removed downloaded archive: {filename}")
     except subprocess.CalledProcessError as e:
         print(f"Failed to extract: {e}")
