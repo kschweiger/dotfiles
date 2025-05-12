@@ -13,4 +13,5 @@ wk.add({
   { "<leader>ut4", "<cmd>colorscheme moonfly<cr>", desc = "Monnfly" },
   { "<leader>o", "o<ESC>", desc = "Insert line below" },
   { "<leader>O", "O<ESC>", desc = "Insert line above" },
+  { "<leader>L", "<cmd>Lazy restore<cr>", desc = "Run Lazy restore" },
 })
