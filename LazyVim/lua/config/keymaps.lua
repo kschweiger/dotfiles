@@ -15,3 +15,8 @@ wk.add({
   { "<leader>O", "O<ESC>", desc = "Insert line above" },
   { "<leader>L", "<cmd>Lazy restore<cr>", desc = "Run Lazy restore" },
 })
+vim.keymap.set("n", "#", function()
+  local word = vim.fn.expand("<cword>")
+  vim.fn.setreg("/", "\\<" .. word .. "\\>")
+  vim.cmd("set hlsearch")
+end, { desc = "Highlight word under cursor without moving" })
