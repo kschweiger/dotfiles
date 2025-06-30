@@ -49,12 +49,24 @@ return {
     opts = {
       model = "claude-3.7-sonnet-thought",
       prompts = {
-        CommitEmoji = {
+        Commit = {
           prompt = [[
 > #git:staged
+> $gpt-4.1
 
-$gemini-2.0-flash-001 Write commit message for the change with commitizen convention.
-Make sure the title has maximum 50 characters and message is wrapped at 72 characters.
+Write a consise commit message with the for the staged changes using the conventionalcommits with one of types fix, refactor, feat, doc, or chore. 
+The message should contain a short title and a consise list of changes in the body
+Wrap the whole message in code block with language gitcommit.
+Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
+]],
+        },
+        CommitFix = {
+          prompt = [[
+> #git:staged
+> $gpt-4.1
+
+The staged code is a fix for some issue. Write a consise commit message with the for the staged changes using the conventionalcommits.
+The message should contain a short title and a consise list of changes in the body
 Wrap the whole message in code block with language gitcommit.
 Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
 ]],
