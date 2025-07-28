@@ -29,6 +29,8 @@ def main():
     if latest_tag == version:
         print("Neovim is up to date")
         exit(0)
+    else:
+        print("Found new version: %s" % latest_tag)
 
     system = platform.system().lower()  # 'Linux', 'Windows', 'Darwin' (for macOS)
     machine = platform.machine().lower()  # 'x86_64', 'amd64', 'arm64', etc.
