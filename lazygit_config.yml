@@ -19,3 +19,7 @@ customCommands:
             value: 'major'
     command: 'git commit --allow-empty -n -m "release({{.Form.ReleaseKeyword}})"'
     description: 'Create an empty release commit with selected keyword'
+  - key: '<c-r>' 
+    context: 'localBranches'
+    description: 'Pull and rebase'
+    command: 'git pull --rebase'
