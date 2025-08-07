@@ -47,6 +47,16 @@ def main():
             ]
             assert len(_asset) == 1, f"Expected 1 asset, found {len(_asset)}"
             asset = _asset[0]
+        case "linux", "aarch64":
+            _asset = [
+                a
+                for a in data["assets"]
+                if system in a["name"]
+                and "arm64" in a["name"]
+                and a["name"].endswith("tar.gz")
+            ]
+            assert len(_asset) == 1, f"Expected 1 asset, found {len(_asset)}"
+            asset = _asset[0]
         case _:
             print(f"System: {system}, Architecture: {machine} not supported")
             exit(1)
