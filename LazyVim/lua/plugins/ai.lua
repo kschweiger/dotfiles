@@ -51,8 +51,8 @@ return {
       prompts = {
         Commit = {
           prompt = [[
-> #git:staged
-> $gpt-4.1
+> #gitdiff:staged
+> $claude-sonnet-4
 
 Write a consise commit message with the for the staged changes using the conventionalcommits with one of types fix, refactor, feat, doc, or chore. 
 The message should contain a short title and a consise list of changes in the body
@@ -62,8 +62,8 @@ Use as much terminal-safe Unicode text-presentation emojis as possible in the ti
         },
         CommitFix = {
           prompt = [[
-> #git:staged
-> $gpt-4.1
+> #gitdiff:staged
+> $claude-sonnet-4
 
 The staged code is a fix for some issue. Write a consise commit message with the for the staged changes using the conventionalcommits.
 The message should contain a short title and a consise list of changes in the body
