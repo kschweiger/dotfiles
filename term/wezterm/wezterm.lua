@@ -27,7 +27,7 @@ config.font_rules = {{
     intensity = "Normal",
     italic = false,
     font = wezterm.font_with_fallback({{
-        family = "JetBrainsMono Nerd Font",
+        family = "JetBrainsMono Nerd Font Mono",
         weight = "Medium",
         style = "Normal"
     }, "Symbols Nerd Font Mono"})
@@ -35,7 +35,7 @@ config.font_rules = {{
     intensity = "Bold",
     italic = false,
     font = wezterm.font_with_fallback({{
-        family = "JetBrainsMono Nerd Font",
+        family = "JetBrainsMono Nerd Font Mono",
         weight = "Bold",
         style = "Normal"
     }, "Symbols Nerd Font Mono"})
@@ -43,7 +43,7 @@ config.font_rules = {{
     intensity = "Half",
     italic = false,
     font = wezterm.font_with_fallback({{
-        family = "JetBrainsMono Nerd Font",
+        family = "JetBrainsMono Nerd Font Mono",
         weight = "Medium",
         style = "Normal"
     }, "Symbols Nerd Font Mono"})
