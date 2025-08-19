@@ -21,13 +21,13 @@ config.window_padding = {
 -- Font settings
 config.font_size = 10.5
 
-config.font = wezterm.font_with_fallback({"JetBrainsMono Nerd Font Mono", "Symbols Nerd Font Mono"})
+config.font = wezterm.font_with_fallback({"JetBrainsMono Nerd Font", "Symbols Nerd Font Mono"})
 
 config.font_rules = {{
     intensity = "Normal",
     italic = false,
     font = wezterm.font_with_fallback({{
-        family = "JetBrainsMono Nerd Font Mono",
+        family = "JetBrainsMono Nerd Font",
         weight = "Medium",
         style = "Normal"
     }, "Symbols Nerd Font Mono"})
@@ -35,7 +35,7 @@ config.font_rules = {{
     intensity = "Bold",
     italic = false,
     font = wezterm.font_with_fallback({{
-        family = "JetBrainsMono Nerd Font Mono",
+        family = "JetBrainsMono Nerd Font",
         weight = "Bold",
         style = "Normal"
     }, "Symbols Nerd Font Mono"})
@@ -43,9 +43,45 @@ config.font_rules = {{
     intensity = "Half",
     italic = false,
     font = wezterm.font_with_fallback({{
-        family = "JetBrainsMono Nerd Font Mono",
+        family = "JetBrainsMono Nerd Font",
         weight = "Medium",
         style = "Normal"
+    }, "Symbols Nerd Font Mono"})
+}, {
+    intensity = "Normal",
+    italic = true,
+    font = wezterm.font_with_fallback({{
+        --family = "VictorMono Nerd Font Mono",
+        --weight = "Bold",
+        -- family = "SpaceMono Nerd Font Mono",
+        -- weight = "Regular",
+        family = "JetBrainsMono Nerd Font",
+        weight = "Light",
+        style = "Italic"
+    }, "Symbols Nerd Font Mono"})
+}, {
+    intensity = "Bold",
+    italic = true,
+    font = wezterm.font_with_fallback({{
+        --family = "VictorMono Nerd Font Mono",
+        --weight = "Bold",
+        -- family = "SpaceMono Nerd Font Mono",
+        -- weight = "Regular",
+        family = "JetBrainsMono Nerd Font",
+        weight = "Light",
+        style = "Italic"
+    }, "Symbols Nerd Font Mono"})
+}, {
+    intensity = "Half",
+    italic = true,
+    font = wezterm.font_with_fallback({{
+        --family = "VictorMono Nerd Font Mono",
+        --weight = "Bold",
+        -- family = "SpaceMono Nerd Font Mono",
+        -- weight = "Regular",
+        family = "JetBrainsMono Nerd Font",
+        weight = "Light",
+        style = "Italic"
     }, "Symbols Nerd Font Mono"})
 }}
 
