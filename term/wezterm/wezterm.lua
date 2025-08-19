@@ -47,30 +47,6 @@ config.font_rules = {{
         weight = "Medium",
         style = "Normal"
     }, "Symbols Nerd Font Mono"})
-}, {
-    intensity = "Normal",
-    italic = true,
-    font = wezterm.font_with_fallback({{
-        family = "VictorMono Nerd Font",
-        weight = "Bold",
-        style = "Italic"
-    }, "Symbols Nerd Font Mono"})
-}, {
-    intensity = "Bold",
-    italic = true,
-    font = wezterm.font_with_fallback({{
-        family = "VictorMono Nerd Font",
-        weight = "Bold",
-        style = "Italic"
-    }, "Symbols Nerd Font Mono"})
-}, {
-    intensity = "Half",
-    italic = true,
-    font = wezterm.font_with_fallback({{
-        family = "VictorMono Nerd Font",
-        weight = "Bold",
-        style = "Italic"
-    }, "Symbols Nerd Font Mono"})
 }}
 
 return config
