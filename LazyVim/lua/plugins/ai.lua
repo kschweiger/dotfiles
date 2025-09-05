@@ -47,26 +47,29 @@ return {
       }
     end,
     opts = {
-      model = "claude-3.7-sonnet-thought",
+      -- model = "claude-3.7-sonnet-thought",
+      model = "gemini-2.5-pro",
       prompts = {
         Commit = {
           prompt = [[
-> #gitdiff:staged
-> $claude-sonnet-4
+#gitdiff:staged
+$claude-sonnet-4
 
 Write a consise commit message with the for the staged changes using the conventionalcommits with one of types fix, refactor, feat, doc, or chore. 
-The message should contain a short title and a consise list of changes in the body
+The message should contain a short title and a consise list of changes in the body.
+Do not just describe what but also why.
 Wrap the whole message in code block with language gitcommit.
 Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
 ]],
         },
         CommitFix = {
           prompt = [[
-> #gitdiff:staged
-> $claude-sonnet-4
+#gitdiff:staged
+$claude-sonnet-4
 
 The staged code is a fix for some issue. Write a consise commit message with the for the staged changes using the conventionalcommits.
-The message should contain a short title and a consise list of changes in the body
+The message should contain a short title and a consise list of changes in the body.
+Do not just describe what but also why.
 Wrap the whole message in code block with language gitcommit.
 Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
 ]],
