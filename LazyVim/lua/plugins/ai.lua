@@ -1,3 +1,13 @@
+local commit_prompt_template = [[
+#gitdiff:%s
+$claude-sonnet-4
+
+Write a concise commit message using the conventionalcommits format with one of the types: fix, refactor, feat, doc, or chore.
+The message should contain a short title and a concise list of changes in the body.
+Do not just describe what but also why.
+Wrap the whole message in a code block with language gitcommit.
+Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
+]]
 return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -44,37 +54,31 @@ return {
           desc = "Prompt Actions (CopilotChat)",
           mode = { "n", "v" },
         },
+        {
+          "<leader>Ac",
+          function()
+            require("CopilotChat").ask(string.format(commit_prompt_template, "staged"))
+          end,
+          desc = "Commit staged",
+          mode = { "n", "v" },
+        },
+        {
+          "<leader>As",
+          function()
+            local sha = vim.fn.input("Enter Git SHA to reference: ")
+            if sha ~= "" then
+              local final_prompt = string.format(commit_prompt_template, sha)
+              require("CopilotChat").ask(final_prompt)
+            end
+          end,
+          desc = "Commit with SHA (CopilotChat)",
+          mode = { "n", "v" },
+        },
       }
     end,
     opts = {
       -- model = "claude-3.7-sonnet-thought",
       model = "gemini-2.5-pro",
-      prompts = {
-        Commit = {
-          prompt = [[
-#gitdiff:staged
-$claude-sonnet-4
-
-Write a consise commit message with the for the staged changes using the conventionalcommits with one of types fix, refactor, feat, doc, or chore. 
-The message should contain a short title and a consise list of changes in the body.
-Do not just describe what but also why.
-Wrap the whole message in code block with language gitcommit.
-Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
-]],
-        },
-        CommitFix = {
-          prompt = [[
-#gitdiff:staged
-$claude-sonnet-4
-
-The staged code is a fix for some issue. Write a consise commit message with the for the staged changes using the conventionalcommits.
-The message should contain a short title and a consise list of changes in the body.
-Do not just describe what but also why.
-Wrap the whole message in code block with language gitcommit.
-Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
-]],
-        },
-      },
     },
   },
 }
