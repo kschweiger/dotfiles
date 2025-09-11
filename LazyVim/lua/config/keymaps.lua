@@ -14,6 +14,7 @@ wk.add({
   { "<leader>o", "o<ESC>", desc = "Insert line below" },
   { "<leader>O", "O<ESC>", desc = "Insert line above" },
   { "<leader>L", "<cmd>Lazy restore<cr>", desc = "Run Lazy restore" },
+  { "<leader>cu", "<cmd>LspRestart<cr>", desc = "Restart LSP Servers" },
 })
 vim.keymap.set("n", "#", function()
   local word = vim.fn.expand("<cword>")
