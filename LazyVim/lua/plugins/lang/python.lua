@@ -1,5 +1,5 @@
 return {
-  { "linux-cultist/venv-selector.nvim", enabled = true },
+  { "linux-cultist/venv-selector.nvim", enabled = true, branch = "main" },
   {
     "nvim-neotest/neotest",
     dependencies = {
