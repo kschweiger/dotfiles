@@ -44,6 +44,7 @@ See [vs-code readme](vscode/README.md) for more details.
 ## Tooling
 
 - [nvim](https://github.com/neovim/neovim/releases)
+- [treesitter cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [bat](https://github.com/sharkdp/bat) to replace `cat` in the terminal
 - [fzf](https://github.com/junegunn/fzf)
