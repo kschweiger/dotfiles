@@ -29,8 +29,13 @@ return {
             require("CopilotChat").ask(final_prompt)
           end
         end,
-        desc = "Commit with SHA (CopilotChat)",
+        desc = "Commit with SHA",
         mode = { "n", "v" },
+      },
+      {
+        "<leader>ar",
+        "<cmd>CopilotChatReset<cr>",
+        desc = "Reset Chat",
       },
     },
     opts = {
