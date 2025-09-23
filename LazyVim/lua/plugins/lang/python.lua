@@ -69,4 +69,26 @@ return {
       opts.sources = {}
     end,
   },
+  -- Example how to override LSP server settings
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     servers = {
+  --       pyright = {
+  --         settings = {
+  --           pyright = {
+  --             disableTaggedHints = true,
+  --           },
+  --           python = {
+  --             analysis = {
+  --               diagnosticSeverityOverrides = {
+  --                 reportUnusedVariable = "error",
+  --               },
+  --             },
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 }
