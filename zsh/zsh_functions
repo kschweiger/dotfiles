@@ -41,3 +41,13 @@ install-py-packages-editable() {
    find . -type f -name "setup.cfg" -execdir pip install -e . --no-deps \;
 }
 
+# yazi shortcut
+if command -v yazi &> /dev/null; then
+  function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+  }
+fi
