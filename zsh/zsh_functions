@@ -24,21 +24,10 @@ spin() {
     "$@" 2>&1 | tspin
 }
 
-# Nuke current python env
-nuke-venv() {
-    echo "Nuking python env " $PYENV_VIRTUAL_ENV
-    pip freeze | grep -v "^-e"  |  grep -v "#" | xargs pip uninstall -y
-    echo "Editable projects need to be uninstalled by hand."
-    pip list
-}
 
 start-agent() {
    eval "$(ssh-agent -s)" 
    ssh-add ~/.ssh/id_ed25519
-}
-
-install-py-packages-editable() {
-   find . -type f -name "setup.cfg" -execdir pip install -e . --no-deps \;
 }
 
 # yazi shortcut

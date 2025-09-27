@@ -20,3 +20,39 @@ zsh_settings
 
 are intended to be sources in the `.zshrc`.
 
+## Additonal tooling
+
+### Brew
+
+Add this snipped to the `.zprofile` for a regular update promt similar to oh-my-zsh for your homebrew package manager
+
+```bash
+if [ -f "$HOME/dotfiles/zsh/brew_autoupdate.zsh" ]; then
+  source "$HOME/dotfiles/zsh/brew_autoupdate.zsh"
+  
+  # Run the update check
+  auto_update_brew
+fi
+```
+
+### Tooling installed with cargo
+
+Add this snipped to the `.zprofile` for a regular update promt similar to oh-my-zsh for your tools installed with cargo. 
+In this case you have to specify which tools to update. Tolls that are listed but not installed, will not be installed.
+
+
+```bash
+if [ -f "$HOME/dotfiles/zsh/cargo_update.zsh" ]; then
+  source "$HOME/dotfiles/zsh/cargo_update.zsh"
+
+  # Define the list of cargo tools you want to keep updated
+  local cargo_tools_to_update=(
+    "tree-sitter-cli"
+    "tailspin"
+  )
+  
+  # Run the update check for the specified tools
+  auto_update_cargo_tools "${cargo_tools_to_update[@]}"
+fi
+
+```
