@@ -20,24 +20,24 @@ return {
             ltex = {
               -- Set default language to German, but enable both.
               language = "de-DE",
-              enabled = {
-                "en-US",
-                "de-DE",
-              },
             },
           },
           -- Define which filetypes the LTeX server should activate for.
           filetypes = text_fts,
-          on_init = function(client, initialize_result)
-            local bufnr = client.config.bufnr or vim.api.nvim_get_current_buf()
+          on_attach = function(client, bufnr)
             local filename = vim.api.nvim_buf_get_name(bufnr)
             local basename = vim.fn.fnamemodify(filename, ":t")
-
             local excluded_files = { "prod.txt", "dev.txt", "test.txt" }
-
+            vim.notify("LTeX attached to: " .. basename, vim.log.levels.INFO)
             if vim.tbl_contains(excluded_files, basename) then
-              client.stop() -- This will prevent on_attach from running
+              vim.notify("Detaching LTeX from excluded file: " .. basename, vim.log.levels.WARN)
+              vim.lsp.buf_detach_client(bufnr, client.id)
+              vim.schedule(function()
+                client.stop()
+              end)
+              return false
             end
+            vim.notify("LTeX will check: " .. basename, vim.log.levels.INFO)
           end,
         },
       },
