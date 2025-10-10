@@ -27,11 +27,25 @@ are intended to be sources in the `.zshrc`.
 Add this snipped to the `.zprofile` for a regular update promt similar to oh-my-zsh for your homebrew package manager
 
 ```bash
-if [ -f "$HOME/dotfiles/zsh/brew_autoupdate.zsh" ]; then
-  source "$HOME/dotfiles/zsh/brew_autoupdate.zsh"
+if [ -f "$HOME/dotfiles/zsh/autoupdate.zsh" ]; then
+  source "$HOME/dotfiles/zsh/autoupdate.zsh"
   
   # Run the update check
   auto_update_brew
+fi
+```
+
+
+### Pyenv
+
+Add this snipped to the `.zprofile` for a regular update promt similar to oh-my-zsh for pyenv
+
+```bash
+if [ -f "$HOME/dotfiles/zsh/autoupdate.zsh" ]; then
+  source "$HOME/dotfiles/zsh/autoupdate.zsh"
+  
+  # Run the update check
+  auto_update_pyenv
 fi
 ```
 
