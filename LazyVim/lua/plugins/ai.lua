@@ -39,8 +39,7 @@ return {
       },
     },
     opts = {
-      -- model = "claude-3.7-sonnet-thought",
-      model = "gemini-2.5-pro",
+      model = "claude-sonnet-4.5",
     },
   },
 }
