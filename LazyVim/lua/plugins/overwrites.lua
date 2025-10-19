@@ -98,23 +98,23 @@ return {
             auto_insert = true,
           },
         },
-        trigger = {
-          show_on_blocked_trigger_characters = function()
-            if vim.api.nvim_get_mode().mode == "c" then
-              return {}
-            end
-
-            if vim.bo.filetype == "python" then
-              return { " ", "\n", "\t", ":" }
-            end
-            -- you can also block per filetype, for example:
-            -- if vim.bo.filetype == 'markdown' then
-            --   return { ' ', '\n', '\t', '.', '/', '(', '[' }
-            -- end
-
-            return { " ", "\n", "\t" }
-          end,
-        },
+        -- trigger = {
+        --   show_on_blocked_trigger_characters = function()
+        --     if vim.api.nvim_get_mode().mode == "c" then
+        --       return {}
+        --     end
+        --
+        --     if vim.bo.filetype == "python" then
+        --       return { " ", "\n", "\t", ":" }
+        --     end
+        --     -- you can also block per filetype, for example:
+        --     -- if vim.bo.filetype == 'markdown' then
+        --     --   return { ' ', '\n', '\t', '.', '/', '(', '[' }
+        --     -- end
+        --
+        --     return { " ", "\n", "\t" }
+        --   end,
+        -- },
       },
     },
   },
