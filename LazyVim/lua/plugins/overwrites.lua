@@ -118,41 +118,41 @@ return {
       },
     },
   },
-  {
-    "mistweaverco/kulala.nvim",
-    opts = {
-      default_env = "staging",
-    },
-    keys = {
-      {
-        "<leader>Re",
-        function()
-          local environments = {
-            { name = "prod", display = "󱓞 Production", level = "info" },
-            { name = "staging", display = "󰔫 Staging", level = "info" },
-            { name = "testing", display = "󰙨 Testing", level = "info" },
-            { name = "dev", display = " Development", level = "info" },
-          }
-          vim.ui.select(environments, {
-            prompt = "Select Environment",
-            format_item = function(item)
-              return item.display
-            end,
-          }, function(selected)
-            if selected then
-              require("kulala").set_selected_env(selected.name)
-              vim.notify("Environment set to: " .. selected.name, selected.level, {
-                title = "Kulala Environment",
-                opts = function(notif)
-                  notif.icon = selected.display
-                end,
-              })
-            end
-          end)
-        end,
-        desc = "Select an environment",
-        ft = "http",
-      },
-    },
-  },
+  -- {
+  --   "mistweaverco/kulala.nvim",
+  --   opts = {
+  --     default_env = "staging",
+  --   },
+  --   keys = {
+  --     {
+  --       "<leader>Re",
+  --       function()
+  --         local environments = {
+  --           { name = "prod", display = "󱓞 Production", level = "info" },
+  --           { name = "staging", display = "󰔫 Staging", level = "info" },
+  --           { name = "testing", display = "󰙨 Testing", level = "info" },
+  --           { name = "dev", display = " Development", level = "info" },
+  --         }
+  --         vim.ui.select(environments, {
+  --           prompt = "Select Environment",
+  --           format_item = function(item)
+  --             return item.display
+  --           end,
+  --         }, function(selected)
+  --           if selected then
+  --             require("kulala").set_selected_env(selected.name)
+  --             vim.notify("Environment set to: " .. selected.name, selected.level, {
+  --               title = "Kulala Environment",
+  --               opts = function(notif)
+  --                 notif.icon = selected.display
+  --               end,
+  --             })
+  --           end
+  --         end)
+  --       end,
+  --       desc = "Select an environment",
+  --       ft = "http",
+  --     },
+  --   },
+  -- },
 }
