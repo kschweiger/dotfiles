@@ -1,6 +1,6 @@
 local commit_prompt_template = [[
 #gitdiff:%s
-$claude-sonnet-4
+$claude-haiku-4.5
 
 Write a concise commit message using the conventionalcommits format with one of the types: fix, refactor, feat, doc, or chore.
 The message should contain a short title and a concise list of changes in the body.
