@@ -12,6 +12,12 @@ return {
           pytest_discover_instances = true,
         },
       },
+      discovery = {
+        filter_dir = function(name, rel_path, root)
+          -- Exclude the 'lib' directory from test discovery
+          return name ~= "lib"
+        end,
+      },
     },
   },
   {
