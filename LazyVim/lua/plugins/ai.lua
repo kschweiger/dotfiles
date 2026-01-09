@@ -6,7 +6,8 @@ Write a concise commit message using the conventionalcommits format with one of 
 The message should contain a short title and a concise list of changes in the body.
 The list of changes should not just be a list every small change. It should convey the general idea and sigmificant changes.
 Wrap the whole message in a code block with language gitcommit.
-Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body.
+Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body. Only use basic markdown formattting.
+Lists should be limited to a depth of one.
 ]]
 return {
   {
