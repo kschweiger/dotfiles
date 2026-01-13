@@ -2,12 +2,18 @@ local commit_prompt_template = [[
 #gitdiff:%s
 $claude-haiku-4.5
 
-Write a concise commit message using the conventionalcommits format with one of the types: fix, refactor, feat, doc, or chore.
-The message should contain a short title and a concise list of changes in the body.
-The list of changes should not just be a list every small change. It should convey the general idea and sigmificant changes.
-Wrap the whole message in a code block with language gitcommit.
-Use as much terminal-safe Unicode text-presentation emojis as possible in the title and the body. Only use basic markdown formattting.
-Lists should be limited to a depth of one.
+Generate a commit message in conventionalcommits format.
+
+**Format:**
+- Type: fix | refactor | feat | docs | chore
+- Title: <type>: <emoji> <concise description> (max 50 chars)
+- Body: Summarize key changes as a `-` bullet list (max depth 1)
+
+**Rules:**
+- Use `-` for all list items
+- Include relevant Unicode emojis (text-safe) in title and body as much as possible
+- Focus on intent/impact, not line-by-line changes
+- Wrap output in ```gitcommit code block
 ]]
 return {
   {
