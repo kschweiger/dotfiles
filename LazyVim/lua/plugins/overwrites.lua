@@ -123,7 +123,7 @@ return {
     opts = {
       modes = {
         treesitter = {
-          labels = "",
+          labels = "asfghjklqwertuiozcbnm",
         },
       },
     },
