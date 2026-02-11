@@ -63,6 +63,7 @@ return {
         DONOTCOMMIT = { icon = "", color = "#DC143C" },
         NOTE = { icon = "", color = "#FFDAB9" },
         HACK = { alt = { "TEMP" } },
+        QUESTION = { icon = "", color = "#ba3cb2" },
       },
     },
   },
