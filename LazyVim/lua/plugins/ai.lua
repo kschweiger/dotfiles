@@ -46,7 +46,7 @@ return {
       },
     },
     opts = {
-      model = "claude-sonnet-4.5",
+      model = "gpt-5.3-codex",
     },
   },
 }
