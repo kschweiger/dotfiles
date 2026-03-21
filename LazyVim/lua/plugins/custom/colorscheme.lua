@@ -2,6 +2,7 @@ return {
   {
     "catppuccin/nvim",
     opts = {
+      flavour = "frappe",
       custom_highlights = function(colors)
         return {
           LineNr = { fg = colors.overlay1 },
