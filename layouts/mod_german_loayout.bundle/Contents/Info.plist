@@ -8,14 +8,14 @@
 	<string>Unsaved Ukelele Document</string>
 	<key>CFBundleVersion</key>
 	<string></string>
-	<key>KLInfo_Modified German Only Layout copy</key>
+	<key>KLInfo_Modified German</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISInputSourceID</key>
-		<string>org.sil.ukelele.keyboardlayout.unsavedukeleledocument.modifiedgermanonlylayoutcopy</string>
+		<string>org.sil.ukelele.keyboardlayout.unsavedukeleledocument.modifiedgerman</string>
 		<key>TISIntendedLanguage</key>
 		<string>de</string>
 	</dict>
