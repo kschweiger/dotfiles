@@ -40,3 +40,19 @@ if command -v yazi &> /dev/null; then
     rm -f -- "$tmp"
   }
 fi
+
+mk_py_venv() {
+  local env_name="$1"
+  local py_ver="${2:-3.12.13}"
+
+  if [[ -z "$env_name" ]]; then
+    echo "Usage: mk_switchboard_env <venv_name> [python_version]"
+    return 1
+  fi
+
+  pyenv virtualenv "$py_ver" "$env_name" || return 1
+  pyenv local "$env_name" || return 1
+  python -m pip install -U uv hgslib-deploy || return 1
+
+  echo "Done: created '$env_name' (Python $py_ver), set local pyenv, installed uv + hgslib-deploy"
+}
