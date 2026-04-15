@@ -17,6 +17,7 @@ return {
           -- Exclude the 'lib' directory from test discovery
           return name ~= "lib"
         end,
+        concurrent = 4,
       },
     },
   },
