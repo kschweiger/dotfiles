@@ -18,6 +18,10 @@ return {
           return name ~= "lib"
         end,
         concurrent = 4,
+        enabled = false,
+      },
+      running = {
+        concurrent = true,
       },
     },
   },
@@ -26,6 +30,14 @@ return {
     config = function()
       local dap = require("dap-python")
       dap.setup("python")
+      local dap = require("dap")
+
+      dap.listeners.before.event_terminated["kill_debugpy"] = function(session)
+        session:close()
+      end
+      dap.listeners.before.event_exited["kill_debugpy"] = function(session)
+        session:close()
+      end
     end,
   },
   {
