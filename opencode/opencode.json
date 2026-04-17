@@ -1,0 +1,47 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Safer sharing posture for work/private repos
+  "share": "disabled",
+  "default_agent": "plan",
+  "permission": {
+    // Read-ish tools (usually safe)
+    "read": "allow",
+    "grep": "allow",
+    "glob": "allow",
+    "list": "allow",
+    "websearch": "allow",
+    "webfetch": "allow",
+    "todoread": "allow",
+    // Write / execute tools (gate with approval)
+    "write": "ask",
+    "edit": "ask",
+    "patch": "ask",
+    "bash": "ask",
+    "todowrite": "ask",
+    // Be conservative with any external MCP tools by default
+    "mcp_*": "ask"
+  },
+  // Keep context healthy in long sessions
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 12000
+  },
+  // Reduce watcher noise
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".next/**",
+      ".turbo/**",
+      "coverage/**",
+      ".venv/**",
+      "venv/**",
+      "__pycache__/**",
+      ".direnv/**",
+      "result/**" // useful on NixOS projects
+    ]
+  }
+}
