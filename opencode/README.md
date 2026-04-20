@@ -10,18 +10,27 @@ Using the pytright langserver istalled with mason in nvim
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": {
-    "pyright": {
-      "disabled": true,
+    "pyright-nvim": {
+      "disabled": false,
       "command": [
-        "~/.local/share/nvim/mason/bin/pyright-langserver",
+        "/absolute/path/to/.local/share/nvim/mason/bin/pyright-langserver",
         "--stdio",
       ],
-      "env": {
-        "VIRTUAL_ENV": "/path/to/venv/base/"
+      "extensions": [
+        ".py",
+        ".pyi"
+      ],
+      // "env": {
+      //   "VIRTUAL_ENV": "/absolute/path/to/.venv/"
+      // },
+      "initialization": {
+        "pythonPath": "/absolute/path/to/.venv/bin/python",
+        "pythonVersion": "3.14",
+        "venvPath": "/absolute/path/to/",
+        "venv": ".venv"
       }
     }
   }
 }
-
 ```
 
