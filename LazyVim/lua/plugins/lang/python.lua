@@ -8,37 +8,22 @@ return {
     opts = {
       adapters = {
         ["neotest-python"] = {
-          dap = { justMyCode = false },
+          dap = { justMyCode = false, subProcess = false },
           pytest_discover_instances = true,
         },
       },
       discovery = {
         filter_dir = function(name, rel_path, root)
-          -- Exclude the 'lib' directory from test discovery
           return name ~= "lib"
         end,
-        concurrent = 4,
+        -- concurrent = 4,
         enabled = false,
+        concurrent = 1,
       },
       running = {
-        concurrent = true,
+        concurrent = false,
       },
     },
-  },
-  {
-    "mfussenegger/nvim-dap-python",
-    config = function()
-      local dap = require("dap-python")
-      dap.setup("python")
-      local dap = require("dap")
-
-      dap.listeners.before.event_terminated["kill_debugpy"] = function(session)
-        session:close()
-      end
-      dap.listeners.before.event_exited["kill_debugpy"] = function(session)
-        session:close()
-      end
-    end,
   },
   {
     "stevearc/conform.nvim",
