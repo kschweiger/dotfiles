@@ -19,7 +19,12 @@
     "bash": "ask",
     "todowrite": "ask",
     // Be conservative with any external MCP tools by default
-    "mcp_*": "ask"
+    "mcp_*": "ask",
+    // git configuration
+    "git": {
+      "*": "allow",
+      "commit *": "ask"
+    }
   },
   // Keep context healthy in long sessions
   "compaction": {
@@ -45,6 +50,28 @@
     ]
   },
   "plugin": [
-    "superpowers@git+https://github.com/obra/superpowers.git"
-  ]
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "@dietrichgebert/ponytail"
+  ],
+  "provider": {
+    "company-litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Company LiteLLM",
+      "options": {
+        "baseURL": "{env:COMPANY_LITELLM_URL}/v1",
+        "apiKey": "{env:COMPANY_LITELLM_TOKEN}"
+      },
+      "models": {
+        "claude-sonnet-5": {
+          "name": "Claude Sonnet 5"
+        },
+        "claude-opus-5": {
+          "name": "Claude Opus 5"
+        },
+        "claude-haiku-4-5": {
+          "name": "Claude Haiku 4.5"
+        }
+      }
+    }
+  }
 }
