@@ -1,2 +1,5 @@
 macos-option-as-alt = left
 theme = Catppuccin Frappe
+working-directory = home
+window-inherit-working-directory = false
+tab-inherit-working-directory = false
