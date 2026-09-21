@@ -77,7 +77,9 @@ This matters particularly in active repositories. A test that patches several in
 
 This is **not** an anti-mock skill.
 
-Mocks and patches are useful for real boundaries such as external services, destructive side effects, expensive operations, difficult failure injection, or nondeterministic dependencies. Interaction assertions are also useful when the interaction is itself meaningful.
+Mocks and patches are useful for boundaries outside the intended scope of a test, unsafe or shared side effects, expensive operations, difficult failure injection, or nondeterministic dependencies. A real test database or service is appropriate when its behavior is part of the contract and the test environment is isolated and controlled. Interaction assertions are also useful when the interaction is itself meaningful.
+
+The skill should distinguish established test infrastructure from new external access: existing repository conventions can be followed without repeated approval, but contacting a new service or resource, using credentials, provisioning infrastructure, or expanding beyond those conventions requires explicit user approval.
 
 The preference is simply:
 
@@ -275,7 +277,7 @@ A useful future section could distinguish:
 
 ### Network and HTTP clients
 
-The skill currently says external calls are a good reason for replacement, but there are several possible approaches:
+The choice for network and HTTP clients depends on the test scope and the service contract. Possible approaches include:
 
 - stub the client boundary,
 - fake transport,

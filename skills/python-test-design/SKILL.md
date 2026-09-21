@@ -79,7 +79,7 @@ Interaction assertions are valid when the interaction itself matters, for exampl
 
 Do not equate "unit test" with "mock every dependency."
 
-Use real collaborators when they are cheap, deterministic, safe, and local to the process. A test can still have a narrow behavioral scope while exercising several real objects together.
+Use real collaborators when they are cheap, deterministic, safe, and within the intended test scope. This can include an isolated test database or service when its semantics are part of the contract. A test can still have a narrow behavioral scope while exercising several real objects together.
 
 When a dependency must be replaced, prefer the least artificial option that solves the problem:
 
@@ -90,14 +90,16 @@ When a dependency must be replaced, prefer the least artificial option that solv
 
 Good reasons to replace a dependency include:
 
-- real network or external service calls,
-- destructive or unsafe side effects,
+- a service is outside the intended scope of the test and a controlled double is sufficient,
+- unsafe, shared, or production side effects,
 - nondeterministic behavior that cannot reasonably be controlled,
 - very expensive operations,
 - unavailable infrastructure,
 - testing a failure that is impractical to produce with the real dependency.
 
-Never trade safety for realism: tests must not call real external services, mutate shared or destructive systems, or depend on unavailable infrastructure merely to avoid a test double. Use an in-memory implementation, fake, stub, or mock at the smallest meaningful boundary.
+Do not reject a real dependency merely because it is external. For integration or system tests, use the real service when its behavior is part of the contract and the environment is isolated, controlled, and appropriate; for unit tests, replace services outside the unit's intended scope when the replacement preserves the behavior under test. Avoid accidental contact with production, shared, or uncontrolled resources, and avoid disproportionate cost or runtime.
+
+> **Approval boundary:** Existing, established test infrastructure—such as the test database already used by the repository's suite—is within scope and does not require repeated approval. Ask for special, explicit user approval before contacting a new external service or resource, using credentials, provisioning infrastructure, or expanding beyond the repository's established test conventions. If it is unclear whether a resource is established, stop and ask.
 
 "It is a dependency" is not by itself a reason to mock it.
 
@@ -261,5 +263,5 @@ Treat these as reasons to reconsider the design, not automatic proof that a test
 - one test per literal input despite identical behavior and assertion structure,
 - opaque parameter IDs such as `case1` for complicated inputs,
 - asserting internal helper calls solely because they currently happen,
-- a test that could contact a real external service or mutate a shared/destructive system,
+- a test that contacts a production, shared, or uncontrolled resource, or pays disproportionate cost for a service outside its intended scope,
 - a test that would fail after a harmless extraction, rename, or internal reorganization.
