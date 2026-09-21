@@ -1,6 +1,6 @@
 ---
 name: python-test-design
-description: Use when writing, reviewing, or refactoring Python tests with pytest and pytest-mock, where choices about test boundaries, mocks or spies, assertions, fixtures, or parametrization affect maintainability.
+description: Use when writing, reviewing, or refactoring tests in a Python repository that already uses pytest and pytest-mock, especially when tests are brittle, overmocked, overspecified, or hard to diagnose.
 ---
 
 # Python Test Design
@@ -20,11 +20,13 @@ The primary goal is not maximum isolation or maximum assertion count. The goal i
 This skill governs **test design and test shape**. If another skill or project rule defines a workflow such as TDD, follow that workflow as well. Explicit user and repository instructions take precedence.
 
 
-## Required Testing Stack and Style
+## Scope and Testing Style
 
-Assume the project uses **pytest** and **pytest-mock**. Write tests in pytest-native style.
+This skill applies to projects that already use **pytest** and **pytest-mock**. For new or rewritten tests, use pytest-native style. Do not add pytest-mock solely to satisfy this skill; if it is not already available, follow the project's existing dependencies and conventions unless the user asks to change them.
 
-Do not fall back to `unittest.TestCase` or unittest-style assertion APIs.
+When reviewing legacy `unittest` tests, identify design issues without forcing an unrelated framework migration. When changing those tests, preserve explicit repository or user direction about the testing framework.
+
+For new or rewritten tests, do not use `unittest.TestCase` or unittest-style assertion APIs.
 
 Use:
 
@@ -34,7 +36,7 @@ Use:
 - `pytest.approx(...)` when approximate numeric comparison is appropriate,
 - pytest fixtures rather than `setUp()` / `tearDown()`,
 - `@pytest.mark.parametrize` for data-driven cases,
-- the `mocker` fixture for mocking, patching, stubbing, and spying.
+- the `mocker` fixture for mocking, patching, stubbing, and spying when pytest-mock is available.
 
 Do not introduce patterns such as:
 
@@ -95,6 +97,8 @@ Good reasons to replace a dependency include:
 - unavailable infrastructure,
 - testing a failure that is impractical to produce with the real dependency.
 
+Never trade safety for realism: tests must not call real external services, mutate shared or destructive systems, or depend on unavailable infrastructure merely to avoid a test double. Use an in-memory implementation, fake, stub, or mock at the smallest meaningful boundary.
+
 "It is a dependency" is not by itself a reason to mock it.
 
 Before adding a mock or patch, ask whether using the real collaborator would make the test simpler and more robust.
@@ -110,7 +114,7 @@ A spy is especially useful when:
 - the detailed returned data is irrelevant to this test,
 - replacing the implementation would reduce confidence in the behavior being exercised.
 
-The project is assumed to provide `pytest-mock`. Use `mocker.spy()` when observation is sufficient and real behavior should continue to execute. Prefer the `mocker` fixture over direct `unittest.mock.patch(...)` usage.
+Use `mocker.spy()` when observation is sufficient and real behavior should continue to execute. Prefer the `mocker` fixture over direct `unittest.mock.patch(...)` usage when pytest-mock is available.
 
 Call assertions are not inherently bad. Use them when they verify meaningful routing, side effects, or collaboration. Avoid call assertions that merely mirror the current implementation sequence.
 
@@ -196,6 +200,8 @@ When a mock, fake, stub, or spy is justified:
 - prefer interfaces and values that resemble real behavior,
 - do not add interaction assertions unrelated to the behavior being tested.
 
+When patching, patch the name as looked up by the system under test—the importing module's namespace—not automatically the module where the object was originally defined.
+
 If the mock setup is larger or harder to understand than using the real code, reconsider the boundary.
 
 ## 9. Follow Existing Repository Conventions Deliberately
@@ -236,37 +242,24 @@ After writing the test:
 
 Before considering test work complete, verify:
 
-- [ ] Tests use pytest-native style; no `unittest.TestCase` or `TestCase.assert*` APIs are introduced.
-- [ ] Mocking/spying uses the `mocker` fixture unless there is a concrete repository-specific reason otherwise.
-- [ ] Each test protects a specific meaningful behavior or regression.
-- [ ] The test name communicates that behavior.
-- [ ] Real collaborators are used unless replacement has a concrete reason.
-- [ ] Spies are preferred when observation is sufficient and real behavior should execute.
-- [ ] Mocks and patches are limited to meaningful boundaries.
-- [ ] Interaction assertions verify relevant routing or side effects, not incidental call structure.
-- [ ] Exact values are asserted only when exactness matters.
-- [ ] Large objects are not compared wholesale when only selected properties matter.
-- [ ] Equivalent cases use parametrization when that improves clarity.
-- [ ] Distinct behaviors remain distinct tests.
-- [ ] Complex parameter sets have semantic IDs when generated IDs would be unclear.
-- [ ] Failures are understandable from the test name, parameter ID, and assertion output.
-- [ ] The test is likely to survive a behavior-preserving refactor.
+- [ ] The test uses the project's intended pytest style and protects one meaningful behavior or regression.
+- [ ] Real collaborators remain in place unless a concrete safety, cost, nondeterminism, or control reason justifies a double.
+- [ ] Doubles are narrow, patch the lookup site, and use spies when observation is sufficient.
+- [ ] Assertions express the contract without incidental exact values, whole-object equality, or duplicated production logic.
+- [ ] Equivalent cases are parameterized; distinct behaviors remain separate; complex cases have semantic IDs.
+- [ ] Names, IDs, and assertions make failures easy to diagnose.
+- [ ] The test is likely to survive a behavior-preserving refactor and fails for the intended regression.
+- [ ] Focused and relevant surrounding tests have been run according to repository practice.
 
-## Anti-Patterns
+## Red Flags
 
-Treat these as warning signs, not automatic proof that a test is wrong:
+Treat these as reasons to reconsider the design, not automatic proof that a test is wrong:
 
-- patching several internal functions of the unit under test,
-- deeply nested `MagicMock` configuration,
-- asserting a long list of exact fields that are irrelevant to the named behavior,
-- asserting exact generated IDs, timestamps, or ordering when those details are not contractual,
-- one test function per literal input despite identical behavior and assertions,
-- parameter IDs such as `case1` for complicated inputs,
+- patching several internal functions or patching the definition site instead of the lookup site,
+- deeply nested mocks or replacing a cheap deterministic collaborator,
+- asserting incidental IDs, timestamps, ordering, call sequences, or whole-object equality,
+- one test per literal input despite identical behavior and assertion structure,
+- opaque parameter IDs such as `case1` for complicated inputs,
 - asserting internal helper calls solely because they currently happen,
-- replacing a cheap deterministic collaborator and then testing the mock instead of real behavior,
-- whole-object equality when the test only cares about one or two properties,
-- tests that fail after a harmless extraction or rename of private implementation code,
-- `unittest.TestCase` subclasses or `self.assert*` assertions in pytest tests,
-- direct `unittest.mock.patch(...)` decorators/context managers where `mocker.patch(...)` would be clearer and automatically scoped.
-
-When one of these appears, reconsider the test design before proceeding.
+- a test that could contact a real external service or mutate a shared/destructive system,
+- a test that would fail after a harmless extraction, rename, or internal reorganization.

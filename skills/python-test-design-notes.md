@@ -1,8 +1,8 @@
-# Python Test Design Skill
+# Python Test Design — Design Notes
 
 Status: **draft / tuning version**
 
-This repository contains an opinionated agent skill for designing and reviewing Python tests with `pytest` and `pytest-mock`.
+This repository contains an opinionated agent skill at `skills/python-test-design/` for designing and reviewing Python tests with `pytest` and `pytest-mock`. These notes preserve the design rationale for future tuning without becoming part of the skill package loaded during normal use.
 
 The point of the skill is not to teach an agent pytest syntax. Modern coding agents generally know how to write a fixture, patch a function, or use `@pytest.mark.parametrize`. The problem this skill targets is **judgment**: agents frequently produce tests that technically pass but are brittle, overmocked, overspecified, hard to diagnose, or unnecessarily coupled to implementation details.
 
@@ -439,7 +439,6 @@ If `SKILL.md` grows too large, move detailed material into references while keep
 ```text
 python-test-design/
 ├── SKILL.md
-├── README.md
 └── references/
     ├── mocking-and-spies.md
     ├── assertions.md
