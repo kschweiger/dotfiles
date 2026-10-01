@@ -148,7 +148,38 @@ This principle is the main reason for discouraging unnecessary patches and irrel
 
 It is not absolute. If a particular interaction is itself part of the contract, asserting it is correct.
 
-### 3. Mock as little as practical
+### 3. Permanent tests should outlive the change that introduced them
+
+A recurring agent failure is to inspect the diff, notice what implementation detail changed, and create a test whose only purpose is to freeze that detail.
+
+That is usually the wrong direction of reasoning. The diff explains **how the implementation changed**; it does not automatically define **what the long-term contract should be**.
+
+A useful review question is:
+
+> Would this test still make sense to a developer reading it six months later with no knowledge of the commit that introduced it?
+
+For example, suppose a refactor changes a class member from `datetime` to `date`. An agent may respond with:
+
+```python
+assert isinstance(result.some_date, date)
+```
+
+That can be correct if `date` is deliberately part of the object's public runtime contract. But if the member is merely an internal representation, the test mostly says "the refactor happened." Months later it provides little behavioral value and prevents future representation changes for no useful reason.
+
+The more durable test should normally express **why** the representation changed. Depending on the actual requirement, that might be:
+
+- serialization contains only a calendar date,
+- comparisons ignore time-of-day,
+- grouping happens by calendar day,
+- timezone conversion cannot alter the stored day,
+- validation rejects values that carry time semantics,
+- a public schema exposes a date rather than a datetime.
+
+This is related to, but distinct from, the general "behavior over implementation" rule. It specifically guards against **diff-shaped tests**: tests created because an implementation detail appears in the current change rather than because that detail deserves a permanent contract.
+
+There is an exception for temporary tests used during a difficult refactor, migration, or characterization exercise. A narrow implementation-level assertion can be useful scaffolding while changing the system safely. The important distinction is lifecycle: if the assertion has no durable meaning after the transformation is complete, it should be removed or replaced before the permanent suite is considered finished.
+
+### 4. Mock as little as practical
 
 The preferred progression is roughly:
 
@@ -161,7 +192,7 @@ This is not a formal taxonomy the agent must mechanically follow. It is a bias t
 
 A recurring failure mode this is intended to prevent is an agent patching every dependency reachable from the target function, then verifying that its own mock configuration was exercised correctly.
 
-### 4. Observation and replacement are different decisions
+### 5. Observation and replacement are different decisions
 
 Agents often jump from "I need to know whether method X was called" to "I should replace method X with a mock."
 
@@ -171,7 +202,7 @@ If the real behavior is safe and useful, observation can be preferable to replac
 
 Call assertions are therefore not discouraged in general. The question is whether the test cares about a meaningful interaction or merely mirrors implementation structure.
 
-### 5. Assertion specificity should match contract specificity
+### 6. Assertion specificity should match contract specificity
 
 Another common agent behavior is to assert explicit values simply because they are available.
 
@@ -179,19 +210,19 @@ The skill deliberately rejects the idea that more exact assertions automatically
 
 Examples:
 
-| Actual contract | Appropriate assertion | Usually too specific |
-| --- | --- | --- |
-| Returns some valid UUID | value parses/is a UUID | exact generated UUID |
-| Preserves caller's request ID | exact equality | only checking UUID type |
-| Chooses strategy B | strategy B observed/called | full equality of strategy B's incidental result |
-| Results are ordered by score | ordering invariant | exact scores if scores are not contractual |
-| Result is ready | `status == READY` | equality of every field on a large result object |
+| Actual contract               | Appropriate assertion      | Usually too specific                             |
+| ----------------------------- | -------------------------- | ------------------------------------------------ |
+| Returns some valid UUID       | value parses/is a UUID     | exact generated UUID                             |
+| Preserves caller's request ID | exact equality             | only checking UUID type                          |
+| Chooses strategy B            | strategy B observed/called | full equality of strategy B's incidental result  |
+| Results are ordered by score  | ordering invariant         | exact scores if scores are not contractual       |
+| Result is ready               | `status == READY`          | equality of every field on a large result object |
 
 Overspecification creates false failures when incidental details change.
 
 Underspecification is also bad. `assert result` is not a substitute for identifying the real contract.
 
-### 6. Parameterize cases, separate behaviors
+### 7. Parameterize cases, separate behaviors
 
 The skill prefers `pytest.mark.parametrize` when several inputs represent examples of the same rule and share the same setup and assertion structure.
 
@@ -201,7 +232,7 @@ Different contracts such as "invalid input raises," "valid input is normalized,"
 
 The goal is not minimizing the number of test functions. The goal is aligning test structure with semantic behavior.
 
-### 7. Semantic parameter IDs are part of failure diagnostics
+### 8. Semantic parameter IDs are part of failure diagnostics
 
 Parameterized tests are especially useful when their cases are understandable in CI output.
 
@@ -225,7 +256,7 @@ pytest.param(disabled_provider, fallback_provider, id="case-2")
 
 The ID should describe the scenario, not serialize the data and not merely number it.
 
-### 8. Failure quality matters
+### 9. Failure quality matters
 
 Tests are debugging tools as much as regression detectors.
 
@@ -277,7 +308,7 @@ A useful future section could distinguish:
 
 ### Network and HTTP clients
 
-The choice for network and HTTP clients depends on the test scope and the service contract. Possible approaches include:
+The skill currently says external calls are a good reason for replacement, but there are several possible approaches:
 
 - stub the client boundary,
 - fake transport,
@@ -408,6 +439,8 @@ When an agent produces a test you dislike, capture three things:
 3. **What decision rule should have prevented it?**
    Example: interaction assertions should correspond to meaningful contracts, not internal sequencing.
 
+Also ask whether the disliked test would still have a clear purpose if the current diff and ticket description were unavailable. If not, it may be change-shaped scaffolding rather than a durable regression test.
+
 Then decide whether the fix belongs in:
 
 - a core principle,
@@ -418,7 +451,21 @@ Then decide whether the fix belongs in:
 
 Avoid adding rules merely because one test looked aesthetically unpleasant. The skill should encode reusable engineering judgment.
 
-### Scenario G: pytest conventions
+### Scenario G: refactor changes an internal representation
+
+Give the agent a change that replaces an internal class member from `datetime` with `date`, where the real requirement is that downstream behavior is date-only and time-of-day must no longer matter.
+
+Desired behavior:
+
+- identify the lasting date-only semantics,
+- test the relevant behavior or public contract,
+- avoid a permanent `isinstance(member, date)` assertion unless runtime type is itself contractual.
+
+Failure signal:
+
+- adding a test whose only meaningful statement is "the member now has the type introduced by this diff."
+
+### Scenario H: pytest conventions
 
 Give the agent an existing pytest suite and ask it to add tests involving exceptions and one patched boundary.
 
@@ -441,6 +488,7 @@ If `SKILL.md` grows too large, move detailed material into references while keep
 ```text
 python-test-design/
 ├── SKILL.md
+├── README.md
 └── references/
     ├── mocking-and-spies.md
     ├── assertions.md
