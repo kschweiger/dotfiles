@@ -1,6 +1,6 @@
 ---
 name: python-test-design
-description: Use when writing, reviewing, or refactoring Python tests with pytest and pytest-mock, where choices about test boundaries, mocks or spies, assertions, fixtures, or parametrization affect maintainability.
+description: Pytest test design and review. Use whenever creating, modifying, generating, debugging, or reviewing Python tests, or when implementing a Python change that requires tests. Load before editing pytest tests, test_*.py files, fixtures, mocks, spies, or parametrized tests.
 ---
 
 # Python Test Design
