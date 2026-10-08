@@ -110,15 +110,15 @@ return {
       },
     },
   },
-  {
-    "mistweaverco/kulala.nvim",
-    opts = {
-      default_env = "staging",
-      ui = {
-        max_response_size = 1048576,
-      },
-    },
-  },
+  -- {
+  --   "mistweaverco/kulala.nvim",
+  --   opts = {
+  --     default_env = "staging",
+  --     ui = {
+  --       max_response_size = 1048576,
+  --     },
+  --   },
+  -- },
   {
     "folke/flash.nvim",
     opts = {
