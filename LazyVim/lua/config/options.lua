@@ -5,6 +5,7 @@
 --
 local opt = vim.opt
 
+vim.g.lazyvim_python_lsp = "ty"
 -- opt.foldmethod = "expr"
 -- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- opt.foldcolumn = "0"
