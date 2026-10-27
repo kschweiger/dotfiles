@@ -56,3 +56,30 @@ mk_py_venv() {
 
   echo "Done: created '$env_name' (Python $py_ver), set local pyenv, installed uv + hgslib-deploy"
 }
+
+jsonfmt() {
+    if [[ $# -ne 1 || ! -f "$1" ]]; then
+        echo "Usage: jsonfmt <file.json>" >&2
+        return 1
+    fi
+
+    local file="$1"
+    local tmp
+
+    tmp=$(mktemp "${file}.tmp.XXXXXX") || return 1
+
+    # Preserve original file permissions
+    cp -p "$file" "$tmp" || {
+        rm -f "$tmp"
+        return 1
+    }
+
+    # Only replace the original if JSON parsing succeeds
+    if jq --indent 2 '.' "$file" > "$tmp"; then
+        mv "$tmp" "$file"
+    else
+        rm -f "$tmp"
+        echo "Failed to format JSON: $file" >&2
+        return 1
+    fi
+}
