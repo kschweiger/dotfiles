@@ -65,11 +65,12 @@ _auto_update() {
   fi
 }
 
-# Auto-update Homebrew packages with confirmation
 auto_update_brew() {
   _auto_update "Homebrew" "brew" "brew update && brew upgrade" "last_brew_update"
 }
-# Auto-update Homebrew packages with confirmation
 auto_update_pyenv() {
   _auto_update "pyenv" "pyenv" "pyenv update" "last_pyenv_update"
+}
+auto_update_uv() {
+  _auto_update "uv" "uv" "PYENV_VERSION="$(pyenv global)" pyenv exec python -m pip install -U uv" "last_uv_update"
 }
