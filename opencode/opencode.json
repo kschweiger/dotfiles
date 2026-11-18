@@ -1,38 +1,52 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  // Safer sharing posture for work/private repos
+
   "share": "disabled",
   "default_agent": "plan",
-  "permission": {
-    // Read-ish tools (usually safe)
-    "read": "allow",
-    "grep": "allow",
-    "glob": "allow",
-    "list": "allow",
-    "websearch": "allow",
-    "webfetch": "allow",
-    "todoread": "allow",
-    // Write / execute tools (gate with approval)
-    "write": "ask",
-    "edit": "ask",
-    "patch": "ask",
-    "bash": "ask",
-    "todowrite": "ask",
-    // Be conservative with any external MCP tools by default
-    "mcp_*": "ask",
-    // git configuration
-    "git": {
-      "*": "allow",
-      "commit *": "ask"
-    }
-  },
-  // Keep context healthy in long sessions
+
+  "permissions": [
+    // Ask by default, including for unknown and MCP tools.
+    // This replaces the legacy mcp_* rule.
+    { "action": "*", "resource": "*", "effect": "ask" },
+
+    // Read-only operations
+    { "action": "read", "resource": "*", "effect": "allow" },
+    { "action": "grep", "resource": "*", "effect": "allow" },
+    { "action": "glob", "resource": "*", "effect": "allow" },
+    { "action": "websearch", "resource": "*", "effect": "allow" },
+    { "action": "webfetch", "resource": "*", "effect": "allow" },
+    { "action": "skill", "resource": "*", "effect": "allow" },
+
+    // V2 combines write, edit, and patch.
+    { "action": "edit", "resource": "*", "effect": "ask" },
+
+    // V2 replaces bash with shell.
+    { "action": "shell", "resource": "*", "effect": "ask" },
+
+    // Allow only non-mutating Git inspection commands.
+    // Commit, push, and other commands still require approval.
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "git log *", "effect": "allow" },
+    { "action": "shell", "resource": "git show *", "effect": "allow" },
+
+    // Require approval before launching subagents.
+    { "action": "subagent", "resource": "*", "effect": "ask" },
+
+    // Ask before accessing directories outside the workspace.
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+
+    // Preserve protection for environment files.
+    { "action": "read", "resource": "*.env", "effect": "ask" },
+    { "action": "read", "resource": "*.env.*", "effect": "ask" },
+    { "action": "read", "resource": "*.env.example", "effect": "allow" }
+  ],
+
   "compaction": {
     "auto": true,
-    "prune": true,
-    "reserved": 12000
+    "buffer": 12000
   },
-  // Reduce watcher noise
+
   "watcher": {
     "ignore": [
       ".git/**",
@@ -46,18 +60,20 @@
       "venv/**",
       "__pycache__/**",
       ".direnv/**",
-      "result/**" // useful on NixOS projects
+      "result/**"
     ]
   },
-  "plugin": [
+
+  "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git",
     "@dietrichgebert/ponytail"
   ],
-  "provider": {
+
+  "providers": {
     "company-litellm": {
-      "npm": "@ai-sdk/openai-compatible",
       "name": "Company LiteLLM",
-      "options": {
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
         "baseURL": "{env:COMPANY_LITELLM_URL}/v1",
         "apiKey": "{env:COMPANY_LITELLM_TOKEN}"
       },
